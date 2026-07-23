@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Building Management Systems — HZ MGT Course</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Inter:wght@400;500;600;700&family=Jost:wght@500;600&display=swap');
+  :root{--navy-950:#0a1a30;--navy-900:#0f2a4a;--navy-700:#1b3a5c;--gold-500:#c89b3c;--gold-400:#d9b563;--cream:#faf8f4;--slate:#4a5568;--line:#e4dcc9;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--cream);color:var(--navy-900);font-family:'Inter',sans-serif;line-height:1.7;}
+  h1,h2,h3{font-family:'Playfair Display',serif;color:var(--navy-950);}
+  a{color:var(--gold-500);}
+  header{background:linear-gradient(120deg,var(--navy-900),var(--navy-700));color:#fff;padding:60px 6vw 50px;}
+  .back-link{font-size:.85rem;color:var(--gold-400);font-weight:600;display:inline-block;margin-bottom:22px;}
+  .eyebrow{font-family:'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;font-size:.72rem;font-weight:600;color:var(--gold-400);margin-bottom:14px;display:block;}
+  header h1{color:#fff;font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:16px;line-height:1.2;}
+  header p{color:#c3cedd;max-width:60ch;font-size:1.02rem;}
+  main{max-width:760px;margin:0 auto;padding:50px 6vw 100px;}
+
+  .module-list{background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px;margin-bottom:48px;}
+  .module{display:flex;gap:16px;padding:18px 20px;border-bottom:1px solid var(--line);align-items:flex-start;}
+  .module:last-child{border-bottom:none;}
+  .module-num{font-family:'Playfair Display',serif;font-style:italic;color:var(--gold-500);font-size:1.3rem;flex-shrink:0;width:32px;}
+  .module-title{font-weight:700;color:var(--navy-950);margin-bottom:3px;}
+  .module-desc{font-size:.86rem;color:var(--slate);}
+  .module.current{background:var(--gold-200,#efdfb8);border-radius:6px;}
+
+  section{margin-bottom:48px;}
+  h2{font-size:1.5rem;margin-bottom:18px;border-top:1px solid var(--line);padding-top:24px;}
+  section:first-of-type h2{border-top:none;padding-top:0;}
+  h3{font-size:1.1rem;margin:22px 0 10px;color:var(--navy-700);}
+  p{margin-bottom:14px;color:#333;}
+  ul{margin:14px 0 14px 22px;}
+  li{margin-bottom:8px;color:#333;}
+
+  .callout{background:#fff;border-left:3px solid var(--gold-500);padding:18px 22px;margin:22px 0;border-radius:4px;font-size:.92rem;box-shadow:0 4px 14px -8px rgba(15,42,74,0.15);}
+  .callout-label{font-weight:700;color:var(--gold-500);font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;display:block;margin-bottom:6px;}
+
+  .exercise{background:var(--navy-950);color:#fff;border-radius:10px;padding:32px 30px;margin:30px 0;}
+  .exercise-label{font-family:'Jost',sans-serif;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-400);margin-bottom:12px;display:block;}
+  .exercise h3{color:#fff;margin-top:0;}
+  .exercise p, .exercise li{color:#dbe3ee;}
+  .exercise ol{margin-left:20px;}
+
+  .checklist{background:var(--navy-950);color:#fff;border-radius:10px;padding:36px 32px;margin:40px 0;}
+  .checklist h2{color:#fff;border:none;padding:0;margin-bottom:18px;}
+  .checklist ul{list-style:none;margin:0;}
+  .checklist li{display:flex;gap:12px;align-items:flex-start;color:#dbe3ee;margin-bottom:14px;font-size:.95rem;}
+  .checklist li::before{content:'✓';color:var(--gold-400);font-weight:700;flex-shrink:0;}
+
+  .cta-band{text-align:center;background:#fff;border:1px solid var(--line);border-radius:10px;padding:44px 30px;margin-top:50px;}
+  .cta-band h3{margin-bottom:12px;}
+  .cta-band p{max-width:48ch;margin:0 auto 22px;}
+  .btn-primary{display:inline-block;background:var(--navy-900);color:#fff;padding:13px 28px;border-radius:5px;font-weight:600;font-size:.92rem;text-decoration:none;}
+  footer{text-align:center;padding:34px;color:var(--slate);font-size:.82rem;border-top:1px solid var(--line);}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="resources.html" class="back-link">← Back to Resource Library</a>
+  <span class="eyebrow">Enterprise Tier · Course</span>
+  <h1>Building Management Systems</h1>
+  <p>The frameworks HZ MGT uses with consulting clients to help a business run without the founder holding every piece of it personally. Module 1 below — the rest of the course unlocks as it's released.</p>
+</header>
+
+<main>
+
+  <div class="module-list">
+    <div class="module current">
+      <div class="module-num">01</div>
+      <div>
+        <div class="module-title">Documenting What's Actually in Your Head</div>
+        <div class="module-desc">Getting your core processes out of your head and into something someone else could follow</div>
+      </div>
+    </div>
+    <div class="module">
+      <div class="module-num">02</div>
+      <div>
+        <div class="module-title">Delegation Without Losing Control</div>
+        <div class="module-desc">The difference between delegating tasks and delegating decisions — and how to do each safely</div>
+      </div>
+    </div>
+    <div class="module">
+      <div class="module-num">03</div>
+      <div>
+        <div class="module-title">Hiring for a Role, Not a Person</div>
+        <div class="module-desc">Building roles that outlast whoever currently fills them</div>
+      </div>
+    </div>
+    <div class="module">
+      <div class="module-num">04</div>
+      <div>
+        <div class="module-title">The Weekly Rhythm That Keeps Things Running</div>
+        <div class="module-desc">Meetings, reporting, and check-ins that surface problems early instead of at crisis point</div>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <h2>Module 1: Documenting What's Actually in Your Head</h2>
+    <p>Almost every small business runs the same way at first: the founder knows how everything works, and everyone else asks the founder when something isn't obvious. This is fine at first — and it's exactly what quietly caps how big the business can grow, and how much time the founder ever gets back.</p>
+    <p>The fix isn't a big, formal operations manual written all at once. It's capturing the handful of processes that actually repeat, in a form someone else could follow without you standing next to them.</p>
+
+    <h3>Start with what repeats, not what's important</h3>
+    <p>The instinct is to document the "big" strategic things first. Don't. Start with whatever happens over and over, the same way, regardless of how small it seems — onboarding a new client, fulfilling a standard order, responding to a common complaint. These are the processes that, once written down, immediately free up real time, because they're the ones someone is currently asking you about weekly.</p>
+
+    <h3>A process document doesn't need to be elaborate</h3>
+    <p>For each process, capture just four things:</p>
+    <ul>
+      <li><strong>Trigger.</strong> What starts this process? (e.g. "a new order comes in")</li>
+      <li><strong>Steps.</strong> The actual sequence, in plain numbered steps — write it the way you'd explain it out loud to a new hire</li>
+      <li><strong>Who's responsible.</strong> Even if it's just you for now, name the role, not just "me" — this makes it easy to hand off later without rewriting anything</li>
+      <li><strong>What "done" looks like.</strong> How do you know this process completed correctly?</li>
+    </ul>
+
+    <div class="callout">
+      <span class="callout-label">A useful test</span>
+      If a competent new hire, with no prior context, couldn't follow your written process and get a reasonable result — it's not documented yet, no matter how clear it feels in your own head.
+    </div>
+  </section>
+
+  <div class="exercise">
+    <span class="exercise-label">Try this this week</span>
+    <h3>Document one process, start to finish</h3>
+    <ol>
+      <li>Pick the one process you get asked about most often by staff, clients, or yourself</li>
+      <li>Write it out using the four elements above — trigger, steps, responsible role, definition of done</li>
+      <li>Hand it to someone else in the business (or even a friend unfamiliar with the work) and watch them try to follow it without your help</li>
+      <li>Fix whatever confused them — that's usually the gap between what's in your head and what's actually on the page</li>
+    </ol>
+  </div>
+
+  <div class="checklist">
+    <h2>Before moving to Module 2</h2>
+    <ul>
+      <li>At least one process fully documented using the four-part structure</li>
+      <li>Tested by someone other than you, following only the written version</li>
+      <li>A short list started of the next 3–5 processes worth documenting next</li>
+    </ul>
+  </div>
+
+  <div class="cta-band">
+    <h3>Want this built out for your actual business?</h3>
+    <p>HZ MGT works directly with Enterprise clients to document real processes, build out delegation structures, and set up the management rhythm that lets a business run without the founder in every room.</p>
+    <a href="resources.html#tiers" class="btn-primary">Talk to HZ MGT →</a>
+  </div>
+
+</main>
+
+<footer>
+  © 2026 Healingzion MGT — Building Businesses · Managing Excellence · Creating Sustainable Success
+</footer>
+
+</body>
+</html>

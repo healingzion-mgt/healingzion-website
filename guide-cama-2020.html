@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAMA 2020, Plainly Explained — HZ MGT Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Inter:wght@400;500;600;700&family=Jost:wght@500;600&display=swap');
+
+  :root{
+    --navy-950:#0a1a30; --navy-900:#0f2a4a; --navy-700:#1b3a5c; --navy-500:#345278;
+    --gold-500:#c89b3c; --gold-400:#d9b563; --gold-200:#efdfb8;
+    --cream:#faf8f4; --slate:#4a5568; --line:#e4dcc9;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--cream);color:var(--navy-900);font-family:'Inter',sans-serif;line-height:1.7;}
+  h1,h2,h3{font-family:'Playfair Display',serif;color:var(--navy-950);}
+  a{color:var(--gold-500);}
+
+  header{background:linear-gradient(120deg,var(--navy-900),var(--navy-700));color:#fff;padding:60px 6vw 50px;}
+  .back-link{font-size:.85rem;color:var(--gold-400);font-weight:600;display:inline-block;margin-bottom:22px;}
+  .eyebrow{font-family:'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;font-size:.72rem;font-weight:600;color:var(--gold-400);margin-bottom:14px;display:block;}
+  header h1{color:#fff;font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:16px;line-height:1.2;}
+  header p{color:#c3cedd;max-width:60ch;font-size:1.02rem;}
+
+  main{max-width:760px;margin:0 auto;padding:50px 6vw 100px;}
+
+  .toc{background:#fff;border:1px solid var(--line);border-radius:8px;padding:26px 28px;margin-bottom:48px;}
+  .toc-title{font-family:'Jost',sans-serif;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-500);font-weight:600;margin-bottom:14px;}
+  .toc ol{padding-left:20px;}
+  .toc li{margin-bottom:8px;font-size:.94rem;}
+  .toc a{color:var(--navy-900);text-decoration:none;border-bottom:1px solid transparent;}
+  .toc a:hover{border-color:var(--gold-500);}
+
+  section{margin-bottom:48px;}
+  h2{font-size:1.5rem;margin-bottom:18px;border-top:1px solid var(--line);padding-top:24px;}
+  section:first-of-type h2{border-top:none;padding-top:0;}
+  h3{font-size:1.1rem;margin:22px 0 10px;color:var(--navy-700);}
+  p{margin-bottom:14px;color:#333;}
+  ul{margin:14px 0 14px 22px;}
+  li{margin-bottom:8px;color:#333;}
+
+  .callout{background:#fff;border-left:3px solid var(--gold-500);padding:18px 22px;margin:22px 0;border-radius:4px;font-size:.92rem;box-shadow:0 4px 14px -8px rgba(15,42,74,0.15);}
+  .callout-label{font-weight:700;color:var(--gold-500);font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;display:block;margin-bottom:6px;}
+  .warn{background:#fdf3e3;border-left:3px solid #b3401e;}
+  .warn .callout-label{color:#b3401e;}
+
+  table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.9rem;}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);}
+  th{font-family:'Jost',sans-serif;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;color:var(--navy-700);}
+
+  .checklist{background:var(--navy-950);color:#fff;border-radius:10px;padding:36px 32px;margin:40px 0;}
+  .checklist h2{color:#fff;border:none;padding:0;margin-bottom:18px;}
+  .checklist ul{list-style:none;margin:0;}
+  .checklist li{display:flex;gap:12px;align-items:flex-start;color:#dbe3ee;margin-bottom:14px;font-size:.95rem;}
+  .checklist li::before{content:'✓';color:var(--gold-400);font-weight:700;flex-shrink:0;}
+
+  .cta-band{text-align:center;background:#fff;border:1px solid var(--line);border-radius:10px;padding:44px 30px;margin-top:50px;}
+  .cta-band h3{margin-bottom:12px;}
+  .cta-band p{max-width:48ch;margin:0 auto 22px;}
+  .btn-primary{display:inline-block;background:var(--navy-900);color:#fff;padding:13px 28px;border-radius:5px;font-weight:600;font-size:.92rem;text-decoration:none;}
+
+  footer{text-align:center;padding:34px;color:var(--slate);font-size:.82rem;border-top:1px solid var(--line);}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="resources.html" class="back-link">← Back to Resource Library</a>
+  <span class="eyebrow">Free Guide · Starter Tier</span>
+  <h1>CAMA 2020, Plainly Explained</h1>
+  <p>The Companies and Allied Matters Act 2020 rewrote the rules for running a company in Nigeria. Here's what actually changed, and what it means for a small or growing business — no legal jargon.</p>
+</header>
+
+<main>
+
+  <div class="toc">
+    <div class="toc-title">In this guide</div>
+    <ol>
+      <li><a href="#what">What CAMA 2020 actually is</a></li>
+      <li><a href="#small-company">The "small company" category — and why it matters</a></li>
+      <li><a href="#secretary">Company secretary: no longer automatic</a></li>
+      <li><a href="#audit">Audits and AGMs: lighter for small companies</a></li>
+      <li><a href="#returns">Annual returns — the one obligation everyone still has</a></li>
+      <li><a href="#other">Other changes worth knowing</a></li>
+      <li><a href="#checklist">Quick checklist</a></li>
+    </ol>
+  </div>
+
+  <section id="what">
+    <h2>1. What CAMA 2020 actually is</h2>
+    <p>The Companies and Allied Matters Act 2020 replaced the older 1990 version of the law and is the primary rulebook for how companies are formed, run, and wound up in Nigeria. Much of it was designed around a single goal: making it easier and cheaper for small businesses to stay compliant, without loosening the obligations that matter for larger, more complex companies.</p>
+    <p>If you registered a company before 2020, or if you're working from an older guide, some of what you were told no longer applies — several of the biggest changes specifically reduce what small companies are required to do.</p>
+  </section>
+
+  <section id="small-company">
+    <h2>2. The "small company" category — and why it matters</h2>
+    <p>CAMA 2020 formally defines a "small company," and qualifying for that status is what unlocks most of the relief the Act offers. A company is generally treated as small if it meets criteria on turnover, net assets, and employee count — broadly, modest annual turnover, modest net assets, and a small team size, roughly in the tens rather than hundreds of employees.</p>
+    <div class="callout">
+      <span class="callout-label">Why this matters</span>
+      Most of the simplifications below — no mandatory company secretary, no mandatory audit, no mandatory AGM — only apply if your company qualifies as "small." As the business grows past those thresholds, these obligations reactivate.
+    </div>
+  </section>
+
+  <section id="secretary">
+    <h2>3. Company secretary: no longer automatic</h2>
+    <p>Under the old law, every company was required to appoint a company secretary, regardless of size. CAMA 2020 changed this: for small companies, appointing a company secretary is now optional rather than mandatory.</p>
+    <p>In practice, many growing businesses still choose to appoint one anyway — a good company secretary keeps filings, statutory registers, and board documentation in order, which matters the moment you're raising capital, bringing on new shareholders, or negotiating a serious contract.</p>
+  </section>
+
+  <section id="audit">
+    <h2>4. Audits and AGMs: lighter for small companies</h2>
+    <p>Two more obligations were relaxed specifically for small companies and companies with a single shareholder:</p>
+    <ul>
+      <li><strong>External audit.</strong> Small companies are exempted from the requirement to have their financial statements audited by an external auditor.</li>
+      <li><strong>Annual General Meeting (AGM).</strong> Small companies are not required to hold a formal AGM. Decisions can generally be made through written resolutions instead of a physical meeting.</li>
+      <li><strong>Minute books.</strong> Companies with a single shareholder are exempted from keeping formal minute books of meetings.</li>
+    </ul>
+    <p>These exemptions reduce cost and paperwork — but they're optional relief, not a ban. A business that wants the discipline of regular audits or formal meetings can still choose to keep them.</p>
+  </section>
+
+  <section id="returns">
+    <h2>5. Annual returns — the one obligation everyone still has</h2>
+    <p>This is the part CAMA 2020 does <em>not</em> relax: every registered company must still file annual returns with the CAC to confirm it remains active and that its registered details are accurate. Small companies get a lighter version — an abridged annual return with less detail than larger companies must provide — but the filing itself is not optional.</p>
+    <div class="callout warn">
+      <span class="callout-label">Don't skip this</span>
+      Missing annual returns for long enough is one of the most common reasons the CAC strikes a company off the register — even a dormant company that isn't actively trading is expected to keep filing.
+    </div>
+  </section>
+
+  <section id="other">
+    <h2>6. Other changes worth knowing</h2>
+    <ul>
+      <li><strong>Single-shareholder companies are now recognized.</strong> You no longer need a minimum of two shareholders to incorporate — a single person can own and run a company on their own.</li>
+      <li><strong>Beneficial ownership disclosure.</strong> Companies must disclose the individuals who ultimately own or control them ("persons with significant control"), with meaningful daily penalties for non-compliance — this is a compliance area that's easy to overlook.</li>
+      <li><strong>Company seal made optional.</strong> A physical company seal is no longer a legal requirement, though some banks still ask for one when opening a corporate account, so it's often worth having regardless.</li>
+      <li><strong>Digital-first filing.</strong> Most post-incorporation filings — annual returns, director changes, share capital changes — now go through the CAC's online portal rather than in person.</li>
+    </ul>
+  </section>
+
+  <div class="checklist" id="checklist">
+    <h2>Quick checklist</h2>
+    <ul>
+      <li>Confirm whether your company currently qualifies as a "small company" under the turnover/assets/employee thresholds</li>
+      <li>Decide — don't just default — whether you want a company secretary, even if it's optional for you</li>
+      <li>Know your annual returns deadline and don't let it lapse, dormant or not</li>
+      <li>Check whether your beneficial ownership disclosure is filed and current</li>
+      <li>If a bank asks for a company seal, budget for one even though it's not legally mandatory</li>
+    </ul>
+  </div>
+
+  <div class="cta-band">
+    <h3>Compliance is easy to get wrong quietly</h3>
+    <p>HZ MGT helps businesses set up the right structure under CAMA 2020 from day one, and keeps the ongoing filings on track so nothing lapses without you noticing.</p>
+    <a href="resources.html#tiers" class="btn-primary">See Growth &amp; Enterprise Support →</a>
+  </div>
+
+</main>
+
+<footer>
+  © 2026 Healingzion MGT — Building Businesses · Managing Excellence · Creating Sustainable Success
+</footer>
+
+</body>
+</html>

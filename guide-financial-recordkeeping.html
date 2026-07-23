@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Financial Record-Keeping — HZ MGT Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Inter:wght@400;500;600;700&family=Jost:wght@500;600&display=swap');
+  :root{--navy-950:#0a1a30;--navy-900:#0f2a4a;--navy-700:#1b3a5c;--gold-500:#c89b3c;--gold-400:#d9b563;--cream:#faf8f4;--slate:#4a5568;--line:#e4dcc9;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--cream);color:var(--navy-900);font-family:'Inter',sans-serif;line-height:1.7;}
+  h1,h2,h3{font-family:'Playfair Display',serif;color:var(--navy-950);}
+  a{color:var(--gold-500);}
+  header{background:linear-gradient(120deg,var(--navy-900),var(--navy-700));color:#fff;padding:60px 6vw 50px;}
+  .back-link{font-size:.85rem;color:var(--gold-400);font-weight:600;display:inline-block;margin-bottom:22px;}
+  .eyebrow{font-family:'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;font-size:.72rem;font-weight:600;color:var(--gold-400);margin-bottom:14px;display:block;}
+  header h1{color:#fff;font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:16px;line-height:1.2;}
+  header p{color:#c3cedd;max-width:60ch;font-size:1.02rem;}
+  main{max-width:760px;margin:0 auto;padding:50px 6vw 100px;}
+  .toc{background:#fff;border:1px solid var(--line);border-radius:8px;padding:26px 28px;margin-bottom:48px;}
+  .toc-title{font-family:'Jost',sans-serif;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-500);font-weight:600;margin-bottom:14px;}
+  .toc ol{padding-left:20px;}
+  .toc li{margin-bottom:8px;font-size:.94rem;}
+  .toc a{color:var(--navy-900);text-decoration:none;border-bottom:1px solid transparent;}
+  .toc a:hover{border-color:var(--gold-500);}
+  section{margin-bottom:48px;}
+  h2{font-size:1.5rem;margin-bottom:18px;border-top:1px solid var(--line);padding-top:24px;}
+  section:first-of-type h2{border-top:none;padding-top:0;}
+  h3{font-size:1.1rem;margin:22px 0 10px;color:var(--navy-700);}
+  p{margin-bottom:14px;color:#333;}
+  ul{margin:14px 0 14px 22px;}
+  li{margin-bottom:8px;color:#333;}
+  .callout{background:#fff;border-left:3px solid var(--gold-500);padding:18px 22px;margin:22px 0;border-radius:4px;font-size:.92rem;box-shadow:0 4px 14px -8px rgba(15,42,74,0.15);}
+  .callout-label{font-weight:700;color:var(--gold-500);font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;display:block;margin-bottom:6px;}
+  table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.9rem;}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);}
+  th{font-family:'Jost',sans-serif;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;color:var(--navy-700);}
+  .checklist{background:var(--navy-950);color:#fff;border-radius:10px;padding:36px 32px;margin:40px 0;}
+  .checklist h2{color:#fff;border:none;padding:0;margin-bottom:18px;}
+  .checklist ul{list-style:none;margin:0;}
+  .checklist li{display:flex;gap:12px;align-items:flex-start;color:#dbe3ee;margin-bottom:14px;font-size:.95rem;}
+  .checklist li::before{content:'✓';color:var(--gold-400);font-weight:700;flex-shrink:0;}
+  .cta-band{text-align:center;background:#fff;border:1px solid var(--line);border-radius:10px;padding:44px 30px;margin-top:50px;}
+  .cta-band h3{margin-bottom:12px;}
+  .cta-band p{max-width:48ch;margin:0 auto 22px;}
+  .btn-primary{display:inline-block;background:var(--navy-900);color:#fff;padding:13px 28px;border-radius:5px;font-weight:600;font-size:.92rem;text-decoration:none;}
+  footer{text-align:center;padding:34px;color:var(--slate);font-size:.82rem;border-top:1px solid var(--line);}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="resources.html" class="back-link">← Back to Resource Library</a>
+  <span class="eyebrow">Growth Tier Guide</span>
+  <h1>Financial Record-Keeping, Done Simply</h1>
+  <p>You don't need expensive software or an accounting degree to keep records that hold up — you need a system you'll actually maintain every week. Here's one that works from day one.</p>
+</header>
+
+<main>
+
+  <div class="toc">
+    <div class="toc-title">In this guide</div>
+    <ol>
+      <li><a href="#why">Why this matters more than it seems to, early on</a></li>
+      <li><a href="#separate">Rule one: separate the business from yourself</a></li>
+      <li><a href="#categories">The categories worth tracking from day one</a></li>
+      <li><a href="#rhythm">A weekly rhythm that actually gets kept</a></li>
+      <li><a href="#tools">Choosing tools without overbuilding</a></li>
+      <li><a href="#checklist">Quick checklist</a></li>
+    </ol>
+  </div>
+
+  <section id="why">
+    <h2>1. Why this matters more than it seems to, early on</h2>
+    <p>Most business owners put off proper record-keeping until it's forced on them — a bank asking for statements, a tax filing deadline, or an investor asking for numbers. By then, reconstructing months of transactions from memory and scattered receipts is genuinely painful, and often inaccurate.</p>
+    <p>The businesses that avoid this aren't necessarily more disciplined people — they just built a habit early, when transaction volume was still low enough to make it easy.</p>
+  </section>
+
+  <section id="separate">
+    <h2>2. Rule one: separate the business from yourself</h2>
+    <p>If there's one habit that matters more than any tool or spreadsheet, it's this: <strong>the business's money and your personal money should never mix in the same account.</strong> Even as a sole proprietor with no legal separation from the business, use a dedicated bank account for it.</p>
+    <p>Without this, every record-keeping task becomes a forensic exercise — was that transfer a business expense, a personal withdrawal, or both? Separate accounts make the answer obvious at a glance, and make it possible to actually see whether the business itself is profitable, independent of your personal spending.</p>
+  </section>
+
+  <section id="categories">
+    <h2>3. The categories worth tracking from day one</h2>
+    <p>You don't need a complex chart of accounts to start. A handful of clear categories, tracked consistently, will get you further than a complicated system you abandon after a month:</p>
+    <table>
+      <tr><th>Category</th><th>What goes here</th></tr>
+      <tr><td>Sales income</td><td>Every payment received for goods or services</td></tr>
+      <tr><td>Cost of goods/materials</td><td>What you directly spent to produce what you sold</td></tr>
+      <tr><td>Operating expenses</td><td>Rent, utilities, transport, data/airtime, packaging</td></tr>
+      <tr><td>Staff costs</td><td>Salaries, wages, any staff-related payments</td></tr>
+      <tr><td>Owner's draw</td><td>Money you personally take out of the business — tracked separately from expenses</td></tr>
+      <tr><td>Tax and statutory payments</td><td>Anything paid to tax authorities or regulators</td></tr>
+    </table>
+    <div class="callout">
+      <span class="callout-label">Why owner's draw gets its own line</span>
+      Mixing what you personally withdraw into "expenses" quietly distorts how profitable the business actually looks. Keeping it separate lets you see the real operating picture clearly.
+    </div>
+  </section>
+
+  <section id="rhythm">
+    <h2>4. A weekly rhythm that actually gets kept</h2>
+    <p>Daily record-keeping sounds ideal but rarely survives contact with a busy week. A realistic rhythm that most small business owners can actually sustain:</p>
+    <ul>
+      <li><strong>As transactions happen:</strong> keep the receipt or note — a photo on your phone is enough, just don't let it get lost</li>
+      <li><strong>Once a week:</strong> sit down and enter everything from that week into your record — bank transfers, cash sales, expenses, all of it</li>
+      <li><strong>Once a month:</strong> reconcile — compare your records against your actual bank statement, and make sure nothing's missing or duplicated</li>
+    </ul>
+    <p>The weekly step is the one that matters most. Once records fall more than a couple of weeks behind, the mental cost of catching up rises sharply, and that's usually where record-keeping quietly stops altogether.</p>
+  </section>
+
+  <section id="tools">
+    <h2>5. Choosing tools without overbuilding</h2>
+    <p>For a genuinely early-stage business, a well-organized spreadsheet — one tab per month, the categories above as columns — is a completely legitimate system. There's no need to adopt full accounting software before the business has the transaction volume to justify it.</p>
+    <p>The signal to move to dedicated accounting software isn't a specific revenue number — it's when you notice the spreadsheet itself becoming the bottleneck: multiple people needing to enter data, invoicing becoming frequent enough that manual tracking is error-prone, or needing reports you can't easily build in a spreadsheet anymore.</p>
+  </section>
+
+  <div class="checklist" id="checklist">
+    <h2>Quick checklist</h2>
+    <ul>
+      <li>Dedicated business bank account, separate from personal finances</li>
+      <li>A simple category list you'll actually stick to (sales, costs, operating expenses, staff, owner's draw, tax)</li>
+      <li>A weekly time block — even 30 minutes — set aside to enter the week's transactions</li>
+      <li>A monthly reconciliation against your actual bank statement</li>
+      <li>A clear trigger point for when to move beyond a spreadsheet</li>
+    </ul>
+  </div>
+
+  <div class="cta-band">
+    <h3>Want a system built around your actual business?</h3>
+    <p>HZ MGT sets up record-keeping systems that match how your business really operates — not a generic template you'll abandon in a month.</p>
+    <a href="resources.html#tiers" class="btn-primary">See Growth &amp; Enterprise Support →</a>
+  </div>
+
+</main>
+
+<footer>
+  © 2026 Healingzion MGT — Building Businesses · Managing Excellence · Creating Sustainable Success
+</footer>
+
+</body>
+</html>
