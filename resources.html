@@ -664,21 +664,31 @@ function startFree(event){
     }
 }
 
-async function handlePaymentSuccess(tierName, tierSlug){
+async function handlePaymentSuccess(tierName, tierSlug, paystackReference){
     paystackInProgress = false;
-    const newTierRank = tierSlug === 'growth' ? 1 : 2;
 
-    const { error } = await supabaseClient
-        .from('profiles')
-        .update({ tier: newTierRank })
-        .eq('id', currentUser.id);
-
-    if(error){
-        alert('Payment succeeded, but saving your new tier failed: ' + error.message + '. Please contact support.');
+    let verifyResult;
+    try{
+        const res = await fetch('/api/verify-payment', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                reference: paystackReference,
+                userId: currentUser.id,
+                tierSlug: tierSlug
+            })
+        });
+        verifyResult = await res.json();
+        if(!res.ok || verifyResult.error){
+            alert('Payment could not be verified: ' + (verifyResult.error || 'Unknown error') + '. If you were charged, please contact support with your payment reference: ' + paystackReference);
+            return;
+        }
+    }catch(err){
+        alert('Could not reach the verification server. If you were charged, please contact support with your payment reference: ' + paystackReference);
         return;
     }
 
-    currentUser.tier = newTierRank;
+    currentUser.tier = verifyResult.tier;
     refreshAccountUI();
     renderLibrary();
     alert('Payment successful! Your account is now on the ' + tierName + ' tier — the Resource Library below has unlocked new guides for you.');
@@ -721,7 +731,7 @@ function payWithPaystack(event, tierName, amountKobo, tierSlug){
                 ]
             },
             callback: function(response){
-                handlePaymentSuccess(tierName, tierSlug);
+                handlePaymentSuccess(tierName, tierSlug, response.reference);
             },
             onClose: function(){
                 paystackInProgress = false;
