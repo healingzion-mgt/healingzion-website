@@ -25,8 +25,9 @@ export async function onRequestPost(context) {
     return new Response(JSON.stringify({ error: 'Incorrect email or password.' }), { status: 401 });
   }
 
-  return new Response(JSON.stringify({ email: user.email, tier: user.tier }), { status: 200 });
+  
 const ADMIN_EMAIL = 'oyibooyoma@gmail.com';
   const tier = normalizedEmail === ADMIN_EMAIL ? 'ENTERPRISE' : user.tier;
 
   return new Response(JSON.stringify({ email: user.email, tier }), { status: 200 });
+  }
