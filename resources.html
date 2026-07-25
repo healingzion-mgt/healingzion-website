@@ -584,7 +584,7 @@
         const record = getUserRecord(sessEmail);
         if(record){ currentUser = { email: sessEmail, tier: (sessEmail.trim().toLowerCase() === 'oyibooyoma@gmail.com' ? 2 : record.tier) }; }
     }
-        catch(e){ /* no session yet — fine */ }
+   }catch(e){ /* no session yet — fine */ }
     refreshAccountUI();
     refreshLibraryUI();
   }
