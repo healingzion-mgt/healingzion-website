@@ -447,4 +447,225 @@ const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const revealEls = document.querySelectorAll('.reveal');
 const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isInt
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); } });
+},{threshold:0.15});
+revealEls.forEach(el=>io.observe(el));
+
+const PAYSTACK_PUBLIC_KEY = 'pk_live_142b7669f40664150e794bbab33af5e4102f913f';
+let paystackInProgress = false;
+const TIER_LABEL = {0:'starter', 1:'growth', 2:'enterprise'};
+let currentUser = null;
+
+function openModal(tab, event){
+    if(event) event.preventDefault();
+    document.getElementById('authModal').classList.add('open');
+    switchTab(tab || 'login');
+}
+function closeModal(){
+    document.getElementById('authModal').classList.remove('open');
+    document.getElementById('loginError').textContent = '';
+    document.getElementById('signupError').textContent = '';
+    document.getElementById('loginPassword').value = '';
+    document.getElementById('signupPassword').value = '';
+}
+function switchTab(tab){
+    document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+    document.getElementById('tabSignup').classList.toggle('active', tab === 'signup');
+    document.getElementById('panelLogin').classList.toggle('active', tab === 'login');
+    document.getElementById('panelSignup').classList.toggle('active', tab === 'signup');
+}
+
+async function fetchProfile(userId){
+    const { data, error } = await supabaseClient
+        .from('profiles')
+        .select('email, tier')
+        .eq('id', userId)
+        .single();
+    if(error){ console.error('Profile fetch failed:', error); return null; }
+    return data;
+}
+
+async function handleSignup(){
+    const email = document.getElementById('signupEmail').value.trim();
+    const password = document.getElementById('signupPassword').value;
+    const errEl = document.getElementById('signupError');
+    errEl.textContent = '';
+    if(!email || !password){ errEl.textContent = 'Enter an email and password.'; return; }
+    if(password.length < 6){ errEl.textContent = 'Password should be at least 6 characters.'; return; }
+
+    const { data, error } = await supabaseClient.auth.signUp({ email, password });
+    if(error){ errEl.textContent = error.message; return; }
+    if(!data.session){
+        errEl.textContent = 'Check your email to confirm your account, then log in.';
+        return;
+    }
+
+    const profile = await fetchProfile(data.user.id);
+    currentUser = { id: data.user.id, email: data.user.email, tier: profile ? profile.tier : 0 };
+    closeModal();
+    refreshAccountUI();
+    refreshLibraryUI();
+}
+
+async function handleLogin(){
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    const errEl = document.getElementById('loginError');
+    errEl.textContent = '';
+    if(!email || !password){ errEl.textContent = 'Enter your email and password.'; return; }
+
+    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+    if(error){ errEl.textContent = 'Incorrect email or password.'; return; }
+
+    const profile = await fetchProfile(data.user.id);
+    currentUser = { id: data.user.id, email: data.user.email, tier: profile ? profile.tier : 0 };
+    closeModal();
+    refreshAccountUI();
+    refreshLibraryUI();
+}
+
+async function logout(){
+    await supabaseClient.auth.signOut();
+    currentUser = null;
+    refreshAccountUI();
+    refreshLibraryUI();
+}
+
+async function restoreSession(){
+    const { data } = await supabaseClient.auth.getSession();
+    if(data.session){
+        const profile = await fetchProfile(data.session.user.id);
+        currentUser = { id: data.session.user.id, email: data.session.user.email, tier: profile ? profile.tier : 0 };
+    }
+    refreshAccountUI();
+    refreshLibraryUI();
+}
+
+function refreshAccountUI(){
+    const area = document.getElementById('accountArea');
+    if(currentUser){
+        const label = TIER_LABEL[currentUser.tier];
+        area.innerHTML =
+            '<div class="account-badge">' + currentUser.email +
+            '<span class="tier-pill ' + label + '">' + label + '</span>' +
+            '<span class="logout-x" onclick="logout()" title="Log out">&times;</span></div>';
+    } else {
+        area.innerHTML = '<a href="#" class="nav-cta" onclick="openModal(\'login\', event)">Log in</a>';
+    }
+}
+
+function refreshLibraryUI(){
+    const effectiveRank = currentUser ? currentUser.tier : 0;
+    document.querySelectorAll('.lib-card').forEach(card => {
+        const minTier = parseInt(card.getAttribute('data-min-tier'), 10);
+        const statusEl = card.querySelector('.lib-status');
+        const existingLink = card.querySelector('.lib-view-link');
+        if(existingLink) existingLink.remove();
+
+        if(minTier <= effectiveRank){
+            statusEl.className = 'lib-status unlocked';
+            statusEl.textContent = '● Unlocked';
+            const link = document.createElement('a');
+            link.href = '#'; link.className = 'lib-view-link'; link.textContent = 'View guide →';
+            const realHref = card.getAttribute('data-href');
+            if(realHref){
+                link.href = realHref;
+            } else {
+                link.onclick = function(e){ e.preventDefault(); alert('This guide is still being written — check back soon.'); };
+            }
+            card.appendChild(link);
+        } else {
+            statusEl.className = 'lib-status locked';
+            const tierName = minTier === 1 ? 'Growth' : 'Enterprise';
+            statusEl.textContent = '🔒 ' + tierName + ' tier';
+        }
+    });
+}
+
+function startFree(event){
+    event.preventDefault();
+    if(currentUser){
+        document.getElementById('library').scrollIntoView({behavior:'smooth'});
+    } else {
+        openModal('signup');
+    }
+}
+
+async function handlePaymentSuccess(tierName, tierSlug){
+    paystackInProgress = false;
+    const newTierRank = tierSlug === 'growth' ? 1 : 2;
+
+    const { error } = await supabaseClient
+        .from('profiles')
+        .update({ tier: newTierRank })
+        .eq('id', currentUser.id);
+
+    if(error){
+        alert('Payment succeeded, but saving your new tier failed: ' + error.message + '. Please contact support.');
+        return;
+    }
+
+    currentUser.tier = newTierRank;
+    refreshAccountUI();
+    refreshLibraryUI();
+    alert('Payment successful! Your account is now on the ' + tierName + ' tier — the Resource Library below has unlocked new guides for you.');
+    document.getElementById('library').scrollIntoView({behavior:'smooth'});
+}
+
+function payWithPaystack(event, tierName, amountKobo, tierSlug){
+    event.preventDefault();
+    if(!currentUser){
+        openModal('login');
+        return;
+    }
+    if(paystackInProgress) return;
+
+    const requiredRank = tierSlug === 'growth' ? 1 : 2;
+    if(currentUser.tier >= requiredRank){
+        alert('You already have access to the ' + tierName + ' tier.');
+        document.getElementById('library').scrollIntoView({behavior:'smooth'});
+        return;
+    }
+
+    if(typeof PaystackPop === 'undefined'){
+        alert('The payment system did not finish loading — please check your internet connection and reload the page, then try again.');
+        return;
+    }
+
+    paystackInProgress = true;
+    const uniqueRef = 'hzmgt_' + tierSlug + '_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
+
+    try{
+        const handler = PaystackPop.setup({
+            key: PAYSTACK_PUBLIC_KEY,
+            email: currentUser.email,
+            amount: amountKobo,
+            currency: 'NGN',
+            ref: uniqueRef,
+            metadata: {
+                custom_fields: [
+                    { display_name: "Membership Tier", variable_name: "tier", value: tierName }
+                ]
+            },
+            callback: function(response){
+                handlePaymentSuccess(tierName, tierSlug);
+            },
+            onClose: function(){
+                paystackInProgress = false;
+            }
+        });
+        handler.openIframe();
+    }catch(err){
+        paystackInProgress = false;
+        alert('Paystack setup failed: ' + (err && err.message ? err.message : String(err)));
+    }
+}
+
+window.addEventListener('error', function(e){
+    alert('Debug — something broke: ' + e.message);
+});
+
+restoreSession();
+</script>
+</body>
+</html>
