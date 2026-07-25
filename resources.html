@@ -186,7 +186,7 @@ footer{padding:44px 6vw;display:flex;justify-content:space-between;align-items:c
 .tiers,.lib-grid{grid-template-columns:1fr;}
 .navlinks{display:none;}
 }
-.account-area{display:flex;align-items:center;gap:14px;}
+.account-area{display:flex;align-items:center;gap:10px;}
 .account-badge{
 display:flex;align-items:center;gap:10px;
 border:1px solid var(--line);border-radius:30px;
@@ -204,6 +204,10 @@ width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify
 color:var(--slate);font-size:.85rem;transition:background .2s ease;
 }
 .account-badge .logout-x:hover{background:var(--line);}
+.admin-btn{
+border:1px solid var(--navy-900);border-radius:30px;background:var(--navy-900);color:#fff;
+padding:8px 18px;font-size:.8rem;font-weight:600;
+}
 .modal-overlay{
 position:fixed;inset:0;background:rgba(10,26,48,0.55);z-index:100;
 display:none;align-items:center;justify-content:center;padding:20px;
@@ -228,12 +232,12 @@ border-bottom:2px solid transparent;cursor:pointer;
 .modal-sub{font-size:.85rem;color:var(--slate);margin-bottom:22px;line-height:1.5;}
 .modal-field{margin-bottom:16px;}
 .modal-field label{font-size:.8rem;font-weight:600;color:var(--navy-700);display:block;margin-bottom:6px;}
-.modal-field input{
+.modal-field input,.modal-field textarea,.modal-field select{
 width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:5px;
 font-family:'Inter',sans-serif;font-size:.92rem;color:var(--navy-900);
 transition:border-color .2s ease;
 }
-.modal-field input:focus{outline:none;border-color:var(--gold-500);}
+.modal-field input:focus,.modal-field textarea:focus{outline:none;border-color:var(--gold-500);}
 .modal-error{color:#b3401e;font-size:.82rem;margin-bottom:14px;min-height:0;}
 .modal-submit{
 width:100%;background:var(--navy-900);color:#fff;border:none;border-radius:5px;
@@ -248,6 +252,39 @@ transition:background .3s ease;
 display:inline-block;margin-top:6px;font-size:.8rem;font-weight:600;color:var(--gold-400);
 border-bottom:1px solid var(--gold-400);padding-bottom:1px;
 }
+
+/* ---------- ADMIN PANEL ---------- */
+.admin-overlay{
+position:fixed;inset:0;background:rgba(10,26,48,0.6);z-index:200;
+display:none;align-items:flex-start;justify-content:center;padding:20px;
+overflow-y:auto;
+}
+.admin-overlay.open{display:flex;}
+.admin-box{
+background:#fff;border-radius:10px;max-width:720px;width:100%;
+margin:30px 0 60px;padding:30px 24px;position:relative;
+}
+.admin-close{position:absolute;top:16px;right:18px;font-size:1.4rem;color:var(--slate);cursor:pointer;}
+.admin-title{font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:18px;color:var(--navy-950);}
+.admin-tabs{display:flex;gap:20px;border-bottom:1px solid var(--line);margin-bottom:20px;}
+.admin-tab{padding:8px 2px 12px;font-size:.9rem;font-weight:600;color:var(--slate);border-bottom:2px solid transparent;cursor:pointer;}
+.admin-tab.active{color:var(--navy-900);border-color:var(--gold-500);}
+.admin-panel{display:none;}
+.admin-panel.active{display:block;}
+.admin-row{
+display:flex;justify-content:space-between;align-items:center;gap:10px;
+border:1px solid var(--line);border-radius:6px;padding:12px 14px;margin-bottom:10px;
+font-size:.85rem;flex-wrap:wrap;
+}
+.admin-row select{padding:6px 8px;border:1px solid var(--line);border-radius:4px;font-size:.82rem;}
+.admin-row button{
+border:none;border-radius:4px;padding:7px 12px;font-size:.78rem;font-weight:600;
+background:var(--navy-900);color:#fff;
+}
+.admin-row .danger{background:#b3401e;}
+.admin-form{border:1px solid var(--line);border-radius:6px;padding:16px;margin-top:16px;}
+.admin-form h4{font-size:.9rem;margin-bottom:12px;}
+.admin-form .modal-field{margin-bottom:12px;}
 </style>
 </head>
 <body>
@@ -299,6 +336,52 @@ border-bottom:1px solid var(--gold-400);padding-bottom:1px;
 </div>
 <button class="modal-submit" onclick="handleSignup()">Create account</button>
 </div>
+</div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="admin-overlay" id="adminOverlay">
+<div class="admin-box">
+<span class="admin-close" onclick="closeAdmin()">&times;</span>
+<div class="admin-title">Admin Panel</div>
+<div class="admin-tabs">
+<div class="admin-tab active" id="adminTabUsers" onclick="switchAdminTab('users')">Users</div>
+<div class="admin-tab" id="adminTabGuides" onclick="switchAdminTab('guides')">Guides</div>
+</div>
+
+<div class="admin-panel active" id="adminPanelUsers">
+<div id="adminUsersList">Loading users…</div>
+</div>
+
+<div class="admin-panel" id="adminPanelGuides">
+<div id="adminGuidesList">Loading guides…</div>
+<div class="admin-form">
+<h4>Add a new guide</h4>
+<div class="modal-error" id="guideFormError"></div>
+<div class="modal-field">
+<label>Title</label>
+<input type="text" id="guideTitle" placeholder="e.g. Payroll Basics for Small Teams">
+</div>
+<div class="modal-field">
+<label>Description</label>
+<input type="text" id="guideDescription" placeholder="One sentence describing the guide">
+</div>
+<div class="modal-field">
+<label>Minimum tier to view</label>
+<select id="guideMinTier">
+<option value="0">Starter (free)</option>
+<option value="1">Growth</option>
+<option value="2">Enterprise</option>
+</select>
+</div>
+<div class="modal-field">
+<label>Content link (page filename, optional)</label>
+<input type="text" id="guideContentUrl" placeholder="guide-payroll-basics.html">
+</div>
+<button class="modal-submit" onclick="addGuide()">Add guide</button>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -386,43 +469,8 @@ stroke-linecap="round" stroke-linejoin="round" fill="none" style="animation-dela
 <h2 style="color:#fff;">Starting fresh — this is the first shelf.</h2>
 <p>New guides, templates, and short courses are added as the library grows. Here's what's launching first.</p>
 </div>
-<div class="lib-grid">
-<div class="lib-card reveal" data-min-tier="0" data-href="guide-cac-registration.html">
-<span class="lib-tag">Guide · Free</span>
-<h3>Registering Your Business with CAC</h3>
-<p>A step-by-step walkthrough of choosing a structure and filing correctly the first time.</p>
-<span class="lib-status">● Available at launch</span>
-</div>
-<div class="lib-card reveal" data-min-tier="0" data-href="guide-cama-2020.html">
-<span class="lib-tag">Guide · Free</span>
-<h3>CAMA 2020, Plainly Explained</h3>
-<p>What the Companies and Allied Matters Act actually requires of small business owners.</p>
-<span class="lib-status">● Available at launch</span>
-</div>
-<div class="lib-card reveal" data-min-tier="1" data-href="guide-contracts-pack.html">
-<span class="lib-tag">Templates · Growth</span>
-<h3>Contracts & Agreements Pack</h3>
-<p>Client, vendor, and partnership agreement templates built for Nigerian SMEs.</p>
-<span class="lib-status locked">🔒 Growth tier</span>
-</div>
-<div class="lib-card reveal" data-min-tier="1" data-href="guide-tax-essentials.html">
-<span class="lib-tag">Guide · Growth</span>
-<h3>Tax Essentials for SMEs</h3>
-<p>What to file, when, and how to keep records that hold up under scrutiny.</p>
-<span class="lib-status locked">🔒 Growth tier</span>
-</div>
-<div class="lib-card reveal" data-min-tier="2" data-href="guide-management-systems.html">
-<span class="lib-tag">Course · Enterprise</span>
-<h3>Building Management Systems</h3>
-<p>The frameworks HZ MGT uses with consulting clients to run without the founder in every room.</p>
-<span class="lib-status locked">🔒 Enterprise tier</span>
-</div>
-<div class="lib-card reveal" data-min-tier="1" data-href="guide-financial-recordkeeping.html">
-<span class="lib-tag">Toolkit · Growth</span>
-<h3>Financial Record-Keeping</h3>
-<p>Simple systems for tracking income, expenses, and cash flow from day one.</p>
-<span class="lib-status locked">🔒 Growth tier</span>
-</div>
+<div class="lib-grid" id="libGrid">
+<!-- guide cards are rendered here dynamically from the database -->
 </div>
 </section>
 </div>
@@ -444,6 +492,7 @@ stroke-linecap="round" stroke-linejoin="round" fill="none" style="animation-dela
 const SUPABASE_URL = 'https://unwusufofzfbwblbjyzf.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_xvICdxCTC3wzUYVZUOBjlw_2MvFIGwK';
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const ADMIN_EMAIL = 'oyibooyoma@gmail.com';
 
 const revealEls = document.querySelectorAll('.reveal');
 const io = new IntersectionObserver((entries)=>{
@@ -455,6 +504,7 @@ const PAYSTACK_PUBLIC_KEY = 'pk_live_142b7669f40664150e794bbab33af5e4102f913f';
 let paystackInProgress = false;
 const TIER_LABEL = {0:'starter', 1:'growth', 2:'enterprise'};
 let currentUser = null;
+let cachedGuides = [];
 
 function openModal(tab, event){
     if(event) event.preventDefault();
@@ -504,7 +554,7 @@ async function handleSignup(){
     currentUser = { id: data.user.id, email: data.user.email, tier: profile ? profile.tier : 0 };
     closeModal();
     refreshAccountUI();
-    refreshLibraryUI();
+    loadGuides();
 }
 
 async function handleLogin(){
@@ -521,14 +571,14 @@ async function handleLogin(){
     currentUser = { id: data.user.id, email: data.user.email, tier: profile ? profile.tier : 0 };
     closeModal();
     refreshAccountUI();
-    refreshLibraryUI();
+    loadGuides();
 }
 
 async function logout(){
     await supabaseClient.auth.signOut();
     currentUser = null;
     refreshAccountUI();
-    refreshLibraryUI();
+    loadGuides();
 }
 
 async function restoreSession(){
@@ -538,47 +588,70 @@ async function restoreSession(){
         currentUser = { id: data.session.user.id, email: data.session.user.email, tier: profile ? profile.tier : 0 };
     }
     refreshAccountUI();
-    refreshLibraryUI();
+    loadGuides();
+}
+
+function isAdmin(){
+    return currentUser && currentUser.email && currentUser.email.toLowerCase() === ADMIN_EMAIL;
 }
 
 function refreshAccountUI(){
     const area = document.getElementById('accountArea');
     if(currentUser){
         const label = TIER_LABEL[currentUser.tier];
-        area.innerHTML =
-            '<div class="account-badge">' + currentUser.email +
+        let html = '<div class="account-badge">' + currentUser.email +
             '<span class="tier-pill ' + label + '">' + label + '</span>' +
             '<span class="logout-x" onclick="logout()" title="Log out">&times;</span></div>';
+        if(isAdmin()){
+            html = '<button class="admin-btn" onclick="openAdmin()">Admin</button>' + html;
+        }
+        area.innerHTML = html;
     } else {
         area.innerHTML = '<a href="#" class="nav-cta" onclick="openModal(\'login\', event)">Log in</a>';
     }
 }
 
-function refreshLibraryUI(){
-    const effectiveRank = currentUser ? currentUser.tier : 0;
-    document.querySelectorAll('.lib-card').forEach(card => {
-        const minTier = parseInt(card.getAttribute('data-min-tier'), 10);
-        const statusEl = card.querySelector('.lib-status');
-        const existingLink = card.querySelector('.lib-view-link');
-        if(existingLink) existingLink.remove();
+// ---------- Guides: fetched from the database, not hardcoded ----------
+async function loadGuides(){
+    const { data, error } = await supabaseClient
+        .from('guides')
+        .select('*')
+        .order('min_tier', { ascending: true })
+        .order('created_at', { ascending: true });
+    if(error){ console.error('Failed to load guides:', error); cachedGuides = []; }
+    else { cachedGuides = data; }
+    renderLibrary();
+}
 
-        if(minTier <= effectiveRank){
-            statusEl.className = 'lib-status unlocked';
-            statusEl.textContent = '● Unlocked';
-            const link = document.createElement('a');
-            link.href = '#'; link.className = 'lib-view-link'; link.textContent = 'View guide →';
-            const realHref = card.getAttribute('data-href');
-            if(realHref){
-                link.href = realHref;
-            } else {
-                link.onclick = function(e){ e.preventDefault(); alert('This guide is still being written — check back soon.'); };
-            }
-            card.appendChild(link);
+function renderLibrary(){
+    const grid = document.getElementById('libGrid');
+    const effectiveRank = currentUser ? currentUser.tier : 0;
+    grid.innerHTML = '';
+
+    cachedGuides.forEach(guide => {
+        const unlocked = guide.min_tier <= effectiveRank;
+        const tierLabel = guide.min_tier === 0 ? 'Free' : (guide.min_tier === 1 ? 'Growth' : 'Enterprise');
+
+        const card = document.createElement('div');
+        card.className = 'lib-card reveal in';
+
+        let statusHtml;
+        if(unlocked){
+            const href = guide.content_url ? guide.content_url : '#';
+            const clickAttr = guide.content_url ? '' : ' onclick="event.preventDefault(); alert(\'This guide is still being written — check back soon.\');"';
+            statusHtml = '<span class="lib-status unlocked">● Unlocked</span>' +
+                '<a href="' + href + '" class="lib-view-link"' + clickAttr + '>View guide →</a>';
         } else {
-            statusEl.className = 'lib-status locked';
-            const tierName = minTier === 1 ? 'Growth' : 'Enterprise';
-            statusEl.textContent = '🔒 ' + tierName + ' tier';
+            statusHtml = '<span class="lib-status locked">🔒 ' + tierLabel + ' tier</span>';
         }
+
+        card.innerHTML =
+            '<span class="lib-tag">Guide · ' + tierLabel + '</span>' +
+            '<h3>' + guide.title + '</h3>' +
+            '<p>' + (guide.description || '') + '</p>' +
+            statusHtml;
+
+        grid.appendChild(card);
     });
 }
 
@@ -607,7 +680,7 @@ async function handlePaymentSuccess(tierName, tierSlug){
 
     currentUser.tier = newTierRank;
     refreshAccountUI();
-    refreshLibraryUI();
+    renderLibrary();
     alert('Payment successful! Your account is now on the ' + tierName + ' tier — the Resource Library below has unlocked new guides for you.');
     document.getElementById('library').scrollIntoView({behavior:'smooth'});
 }
@@ -659,6 +732,121 @@ function payWithPaystack(event, tierName, amountKobo, tierSlug){
         paystackInProgress = false;
         alert('Paystack setup failed: ' + (err && err.message ? err.message : String(err)));
     }
+}
+
+// ---------- Admin panel ----------
+function openAdmin(){
+    if(!isAdmin()) return;
+    document.getElementById('adminOverlay').classList.add('open');
+    switchAdminTab('users');
+}
+function closeAdmin(){
+    document.getElementById('adminOverlay').classList.remove('open');
+}
+function switchAdminTab(tab){
+    document.getElementById('adminTabUsers').classList.toggle('active', tab === 'users');
+    document.getElementById('adminTabGuides').classList.toggle('active', tab === 'guides');
+    document.getElementById('adminPanelUsers').classList.toggle('active', tab === 'users');
+    document.getElementById('adminPanelGuides').classList.toggle('active', tab === 'guides');
+    if(tab === 'users') loadAdminUsers();
+    if(tab === 'guides') loadAdminGuides();
+}
+
+async function loadAdminUsers(){
+    const listEl = document.getElementById('adminUsersList');
+    listEl.innerHTML = 'Loading users…';
+    const { data, error } = await supabaseClient
+        .from('profiles')
+        .select('id, email, tier')
+        .order('email', { ascending: true });
+    if(error){ listEl.innerHTML = 'Failed to load users: ' + error.message; return; }
+
+    listEl.innerHTML = '';
+    data.forEach(u => {
+        const row = document.createElement('div');
+        row.className = 'admin-row';
+        row.innerHTML =
+            '<span>' + u.email + '</span>' +
+            '<span>' +
+            '<select id="tierSelect_' + u.id + '">' +
+            '<option value="0"' + (u.tier===0?' selected':'') + '>Starter</option>' +
+            '<option value="1"' + (u.tier===1?' selected':'') + '>Growth</option>' +
+            '<option value="2"' + (u.tier===2?' selected':'') + '>Enterprise</option>' +
+            '</select> ' +
+            '<button onclick="saveUserTier(\'' + u.id + '\')">Save</button>' +
+            '</span>';
+        listEl.appendChild(row);
+    });
+    if(data.length === 0){ listEl.innerHTML = 'No users found yet.'; }
+}
+
+async function saveUserTier(userId){
+    const select = document.getElementById('tierSelect_' + userId);
+    const newTier = parseInt(select.value, 10);
+    const { error } = await supabaseClient
+        .from('profiles')
+        .update({ tier: newTier })
+        .eq('id', userId);
+    if(error){ alert('Failed to update user: ' + error.message); return; }
+    alert('User tier updated.');
+    if(currentUser && currentUser.id === userId){
+        currentUser.tier = newTier;
+        refreshAccountUI();
+        renderLibrary();
+    }
+}
+
+async function loadAdminGuides(){
+    const listEl = document.getElementById('adminGuidesList');
+    listEl.innerHTML = 'Loading guides…';
+    const { data, error } = await supabaseClient
+        .from('guides')
+        .select('*')
+        .order('min_tier', { ascending: true });
+    if(error){ listEl.innerHTML = 'Failed to load guides: ' + error.message; return; }
+
+    listEl.innerHTML = '';
+    data.forEach(g => {
+        const tierLabel = g.min_tier === 0 ? 'Starter' : (g.min_tier === 1 ? 'Growth' : 'Enterprise');
+        const row = document.createElement('div');
+        row.className = 'admin-row';
+        row.innerHTML =
+            '<span><strong>' + g.title + '</strong><br><span style="color:#888">' + tierLabel + '</span></span>' +
+            '<span><button class="danger" onclick="deleteGuide(\'' + g.id + '\')">Delete</button></span>';
+        listEl.appendChild(row);
+    });
+    if(data.length === 0){ listEl.innerHTML = 'No guides yet.'; }
+}
+
+async function addGuide(){
+    const title = document.getElementById('guideTitle').value.trim();
+    const description = document.getElementById('guideDescription').value.trim();
+    const minTier = parseInt(document.getElementById('guideMinTier').value, 10);
+    const contentUrl = document.getElementById('guideContentUrl').value.trim();
+    const errEl = document.getElementById('guideFormError');
+    errEl.textContent = '';
+
+    if(!title){ errEl.textContent = 'Enter a title for the guide.'; return; }
+
+    const { error } = await supabaseClient
+        .from('guides')
+        .insert({ title, description, min_tier: minTier, content_url: contentUrl || null });
+
+    if(error){ errEl.textContent = 'Failed to add guide: ' + error.message; return; }
+
+    document.getElementById('guideTitle').value = '';
+    document.getElementById('guideDescription').value = '';
+    document.getElementById('guideContentUrl').value = '';
+    loadAdminGuides();
+    loadGuides();
+}
+
+async function deleteGuide(guideId){
+    if(!confirm('Delete this guide? This cannot be undone.')) return;
+    const { error } = await supabaseClient.from('guides').delete().eq('id', guideId);
+    if(error){ alert('Failed to delete guide: ' + error.message); return; }
+    loadAdminGuides();
+    loadGuides();
 }
 
 window.addEventListener('error', function(e){
