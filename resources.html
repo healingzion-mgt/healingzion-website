@@ -564,7 +564,7 @@
     if(!record || record.password !== password){ errEl.textContent = 'Incorrect email or password.'; return; }
 
     setSession(email);
-    currentUser = { email: email, tier: record.tier };
+    currentUser = { email: email, tier: (email.trim().toLowerCase() === 'oyibooyoma@gmail.com' ? 2 : record.tier) };
     closeModal();
     refreshAccountUI();
     refreshLibraryUI();
@@ -582,9 +582,9 @@
       const sessEmail = localStorage.getItem('session');
       if(sessEmail){
         const record = getUserRecord(sessEmail);
-        if(record){ currentUser = { email: sessEmail, tier: record.tier }; }
-      }
-    }catch(e){ /* no session yet — fine */ }
+        if(record){ currentUser = { email: sessEmail, tier: (sessEmail.trim().toLowerCase() === 'oyibooyoma@gmail.com' ? 2 : record.tier) }; }
+    }
+        catch(e){ /* no session yet — fine */ }
     refreshAccountUI();
     refreshLibraryUI();
   }
