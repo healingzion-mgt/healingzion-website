@@ -485,8 +485,10 @@
 
   // ---- Paystack test checkout ----
   // TEST MODE ONLY. This public key is safe to expose in front-end code.
-  const PAYSTACK_PUBLIC_KEY ='pk_live_142b7669f40664150e794bbab...
-  let paystackInProgress = false;
+  // ---- Paystack checkout ----
+      const PAYSTACK_PUBLIC_KEY = 'pk_live_142b7669f40664150e794bbab33af5e4102f913f';
+      let paystackInProgress = false;
+  
 
   const TIER_LABEL = {0:'starter', 1:'growth', 2:'enterprise'};
   let currentUser = null; // { email, tier } once logged in
