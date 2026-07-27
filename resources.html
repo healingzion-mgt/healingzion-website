@@ -489,16 +489,25 @@ stroke-linecap="round" stroke-linejoin="round" fill="none" style="animation-dela
 <script src="https://js.paystack.co/v1/inline.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const SUPABASE_URL = 'https://unwusufofzfbwblbjyzf.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_xvICdxCTC3wzUYVZUOBjlw_2MvFIGwK';
-const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-const ADMIN_EMAIL = 'oyibooyoma@gmail.com';
+window.addEventListener('error', function(e){
+    alert('Debug — something broke: ' + e.message);
+});
 
 const revealEls = document.querySelectorAll('.reveal');
 const io = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); } });
 },{threshold:0.15});
 revealEls.forEach(el=>io.observe(el));
+
+const SUPABASE_URL = 'https://unwusufofzfbwblbjyzf.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_xvICdxCTC3wzUYVZUOBjlw_2MvFIGwK';
+let supabaseClient;
+try{
+    supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+}catch(e){
+    console.error('Supabase failed to initialize:', e);
+}
+const ADMIN_EMAIL = 'oyibooyoma@gmail.com';
 
 const PAYSTACK_PUBLIC_KEY = 'pk_live_142b7669f40664150e794bbab33af5e4102f913f';
 let paystackInProgress = false;
@@ -582,6 +591,7 @@ async function logout(){
 }
 
 async function restoreSession(){
+    if(!supabaseClient){ refreshAccountUI(); return; }
     const { data } = await supabaseClient.auth.getSession();
     if(data.session){
         const profile = await fetchProfile(data.session.user.id);
@@ -613,6 +623,7 @@ function refreshAccountUI(){
 
 // ---------- Guides: fetched from the database, not hardcoded ----------
 async function loadGuides(){
+    if(!supabaseClient){ cachedGuides = []; renderLibrary(); return; }
     const { data, error } = await supabaseClient
         .from('guides')
         .select('*')
@@ -858,10 +869,6 @@ async function deleteGuide(guideId){
     loadAdminGuides();
     loadGuides();
 }
-
-window.addEventListener('error', function(e){
-    alert('Debug — something broke: ' + e.message);
-});
 
 restoreSession();
 </script>
