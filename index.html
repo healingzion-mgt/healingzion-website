@@ -179,6 +179,16 @@
     text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;font-weight:500;}
   .vm-card p{color:rgba(255,255,255,0.82);font-size:15px;font-family:'Fraunces',serif;font-weight:400;font-size:18px;line-height:1.5;}
 
+  /* LEADERSHIP */
+  .leader-card{
+    background:#fff;border:1px solid var(--line);padding:28px;border-radius:3px;
+    display:flex;align-items:center;gap:20px;margin-top:20px;
+  }
+  @media (max-width:480px){.leader-card{flex-direction:column;text-align:center;}}
+  .leader-card img{height:64px;width:auto;flex-shrink:0;}
+  .leader-card h3{font-size:15px;font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:0.08em;color:var(--navy-800);margin-bottom:4px;}
+  .leader-card p{font-size:14px;color:var(--ink-600);}
+
   /* VALUES GRID */
   .values-grid{
     display:grid;grid-template-columns:repeat(5,1fr);gap:1px;
@@ -287,7 +297,7 @@
 <header>
   <nav>
     <div class="brand">
-      <img src="logo.jpg" alt="Healingzion Management logo">
+      <img src="logo.jpg" alt="Healingzion Management Venture (HMV) logo">
     </div>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
     <div class="nav-links" id="navLinks">
@@ -305,9 +315,9 @@
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
-      <div class="eyebrow">Corporate Profile · HZ MGT</div>
+      <div class="eyebrow">Corporate Profile · HMV</div>
       <h1>Building businesses.<br>Managing <em>excellence</em>.<br>Creating sustainable success.</h1>
-      <p class="lede">Healingzion Management is a multidisciplinary consulting firm helping businesses, institutions, and entrepreneurs turn ambition into resilient, profitable organizations.</p>
+      <p class="lede">Healingzion Management Venture (HMV) is a multidisciplinary consulting firm helping businesses, institutions, and entrepreneurs turn ambition into resilient, profitable organizations.</p>
       <div class="btn-row">
         <a href="#book" class="btn btn-gold">Book a Consultation</a>
         <a href="#services" class="btn btn-ghost">Explore Services</a>
@@ -344,6 +354,13 @@
       <h2>Professional leadership for organizations that want to last.</h2>
       <p>We specialize in delivering professional management solutions across industries by combining strategic planning, corporate governance, business development, project management, and organizational transformation.</p>
       <p>Our objective is not merely to manage businesses, but to build resilient organizations capable of competing successfully in today's dynamic global marketplace. We work closely with every client to understand their vision, identify opportunities, overcome operational challenges, and implement solutions that deliver measurable results.</p>
+      <div class="leader-card">
+        <img src="hz-monogram.png" alt="HZ executive monogram">
+        <div>
+          <h3>Executive Leadership</h3>
+          <p>Led by the Office of the CEO — the HZ monogram marks our executive seal of leadership, vision, and authority.</p>
+        </div>
+      </div>
     </div>
     <div>
       <div class="vm-card">
