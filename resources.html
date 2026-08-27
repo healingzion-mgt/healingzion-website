@@ -344,8 +344,62 @@ background:var(--navy-900);color:#fff;
 <div class="admin-box">
 <span class="admin-close" onclick="closeAdmin()">&times;</span>
 <div class="admin-title">Admin Panel</div>
-    <a href="/analytics-dashboard.html" target="_blank" style="display:inline-block;margin-bottom:16px;font-size:.85rem;font-weight:600;color:var(--gold-500);border-bottom:1px solid var(--gold-500);padding-bottom:2px;">📊 View Visitor Analytics →</a>
-<div class="admin-tabs">
+<a href="/analytics-dashboard.html" target="_blank" style="display:inline-block;margin-bottom:16px;font-size:.85rem;font-weight:600;color:var(--gold-500);border-bottom:1px solid var(--gold-500);padding-bottom:2px;">📊 View Visitor Analytics →</a>
+
+<div style="border:1px solid var(--line);border-radius:6px;padding:16px;margin-bottom:16px;">
+  <h4 style="font-size:.9rem;margin-bottom:12px;">📣 Notify Followers of New Content</h4>
+  <div class="modal-error" id="notifyError" style="min-height:0;"></div>
+  <div class="modal-field">
+    <label>Guide title</label>
+    <input type="text" id="notifyTitle" placeholder="e.g. The Prayer Altar">
+  </div>
+  <div class="modal-field">
+    <label>Guide URL</label>
+    <input type="text" id="notifyUrl" placeholder="https://healingzion-website.pages.dev/guide-prayer-altar.html">
+  </div>
+  <button class="modal-submit" onclick="notifyFollowers()">Send Notification</button>
+  <div id="notifyResult" style="margin-top:10px;font-size:.82rem;"></div>
+</div>
+
+<script>
+async function notifyFollowers() {
+  const title = document.getElementById('notifyTitle').value.trim();
+  const url = document.getElementById('notifyUrl').value.trim();
+  const errEl = document.getElementById('notifyError');
+  const resultEl = document.getElementById('notifyResult');
+  errEl.textContent = '';
+  resultEl.textContent = '';
+
+  if (!title || !url) {
+    errEl.textContent = 'Please fill in both the title and URL.';
+    return;
+  }
+
+  resultEl.style.color = 'var(--slate)';
+  resultEl.textContent = 'Sending...';
+
+  try {
+    const res = await fetch('/api/notify-followers', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title, url, adminEmail: 'oyibooyoma@gmail.com' })
+    });
+    const data = await res.json();
+    if (data.ok) {
+      resultEl.style.color = '#2f8f4e';
+      resultEl.textContent = `Sent to ${data.sent} of ${data.total || 0} followers.`;
+      document.getElementById('notifyTitle').value = '';
+      document.getElementById('notifyUrl').value = '';
+    } else {
+      resultEl.style.color = '#b3401e';
+      resultEl.textContent = data.error || 'Failed to send.';
+    }
+  } catch (e) {
+    resultEl.style.color = '#b3401e';
+    resultEl.textContent = 'Network error — try again.';
+  }
+}
+</script>
 <div class="admin-tab active" id="adminTabUsers" onclick="switchAdminTab('users')">Users</div>
 <div class="admin-tab" id="adminTabGuides" onclick="switchAdminTab('guides')">Guides</div>
 </div>
