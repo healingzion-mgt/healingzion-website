@@ -21,13 +21,14 @@ export async function onRequest(context) {
 
   const cleanPath = path.replace(/\.html$/, "");
   const isGuidePage = /^\/guide-[^\/]+$/.test(cleanPath);
+  const isResourcesHub = cleanPath === "/resources";
   const isAlreadyCovered = ALREADY_COVERED.some(
     (covered) => covered.replace(/\.html$/, "") === cleanPath
   );
 
   const response = await next();
 
-  if (!isGuidePage || isAlreadyCovered) {
+  if ((!isGuidePage && !isResourcesHub) || isAlreadyCovered) {
     return response;
   }
 
@@ -78,3 +79,4 @@ loadFollowerCount();
     .on("body", new BodyInjector())
     .transform(newResponse);
 }
+  
