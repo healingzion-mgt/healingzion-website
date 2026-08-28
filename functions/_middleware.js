@@ -3,6 +3,8 @@ export async function onRequest(context) {
   const url = new URL(request.url);
   const path = url.pathname;
 
+  console.log("MIDDLEWARE HIT:", path);
+
   const ALREADY_COVERED = [
     "/guide-strong-team.html",
     "/guide-cac-registration.html",
@@ -22,18 +24,25 @@ export async function onRequest(context) {
   const isGuidePage = /\/guide-[^\/]+\.html$/.test(path);
   const isAlreadyCovered = ALREADY_COVERED.includes(path);
 
+  console.log("isGuidePage:", isGuidePage, "isAlreadyCovered:", isAlreadyCovered);
+
   const response = await next();
 
   if (!isGuidePage || isAlreadyCovered) {
+    console.log("SKIPPING injection for:", path);
     return response;
   }
 
   const contentType = response.headers.get("content-type") || "";
+  console.log("contentType:", contentType);
+
   if (!contentType.includes("text/html")) {
+    console.log("SKIPPING - not html, contentType was:", contentType);
     return response;
   }
 
-  const widgetHtml = `
+  try {
+    const widgetHtml = `
 <div id="engagementWidget" style="margin-top:30px;padding:20px;border:1px solid #24304f;border-radius:8px;background:#101a3a;font-family:Arial,sans-serif;">
   <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
     <button id="loveBtn" onclick="sendLove()" style="background:#101a3a;border:2px solid #d4af37;border-radius:30px;padding:8px 18px;font-size:16px;color:#f4f1ea;cursor:pointer;">
@@ -62,16 +71,25 @@ loadFollowerCount();
 </script>
 `;
 
-  const newResponse = new Response(response.body, response);
-  newResponse.headers.delete("Content-Length");
+    const newResponse = new Response(response.body, response);
+    newResponse.headers.delete("Content-Length");
 
-  class BodyInjector {
-    element(element) {
-      element.append(widgetHtml, { html: true });
+    class BodyInjector {
+      element(element) {
+        console.log("INJECTING into body element");
+        element.append(widgetHtml, { html: true });
+      }
     }
-  }
 
-  return new HTMLRewriter()
-    .on("body", new BodyInjector())
-    .transform(newResponse);
+    const finalResponse = new HTMLRewriter()
+      .on("body", new BodyInjector())
+      .transform(newResponse);
+
+    console.log("INJECTION COMPLETE, returning transformed response");
+    return finalResponse;
+
+  } catch (err) {
+    console.error("MIDDLEWARE ERROR:", err.message, err.stack);
+    return response;
+  }
 }
