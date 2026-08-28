@@ -1,0 +1,10 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "healingzion-website",
+  "compatibility_date": "2026-08-26",
+  "main": "functions/_middleware.js",
+  "assets": {
+    "directory": ".",
+    "run_worker_first": true
+  }
+}
