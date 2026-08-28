@@ -62,6 +62,9 @@ loadFollowerCount();
 </script>
 `;
 
+  const newResponse = new Response(response.body, response);
+  newResponse.headers.delete("Content-Length");
+
   class BodyInjector {
     element(element) {
       element.append(widgetHtml, { html: true });
@@ -70,5 +73,5 @@ loadFollowerCount();
 
   return new HTMLRewriter()
     .on("body", new BodyInjector())
-    .transform(response);
+    .transform(newResponse);
 }
