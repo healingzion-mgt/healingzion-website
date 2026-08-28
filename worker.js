@@ -63,11 +63,6 @@ export default {
       return response;
     }
 
-    const contentType = response.headers.get("content-type") || "";
-    if (!contentType.includes("text/html")) {
-      return response;
-    }
-
     const newHeaders = new Headers(response.headers);
     newHeaders.delete("content-length");
 
