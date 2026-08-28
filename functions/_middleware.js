@@ -1,39 +1,20 @@
-export async function onRequest(context) {
-  const { request, next } = context;
-  const url = new URL(request.url);
-  const path = url.pathname;
+const ALREADY_COVERED = [
+  "/guide-strong-team.html",
+  "/guide-cac-registration.html",
+  "/guide-cac-registration-v2.html",
+  "/guide-cac-mistakes-delay.html",
+  "/guide-registered-your-business.html",
+  "/guide-cac-3-mistakes.html",
+  "/guide-cama-2020.html",
+  "/guide-contracts-pack.html",
+  "/guide-financial-recordkeeping.html",
+  "/guide-management-systems.html",
+  "/guide-managing-people.html",
+  "/guide-prayer-altar.html",
+  "/guide-tax-essentials.html"
+];
 
-  const ALREADY_COVERED = [
-    "/guide-strong-team.html",
-    "/guide-cac-registration.html",
-    "/guide-cac-registration-v2.html",
-    "/guide-cac-mistakes-delay.html",
-    "/guide-registered-your-business.html",
-    "/guide-cac-3-mistakes.html",
-    "/guide-cama-2020.html",
-    "/guide-contracts-pack.html",
-    "/guide-financial-recordkeeping.html",
-    "/guide-management-systems.html",
-    "/guide-managing-people.html",
-    "/guide-prayer-altar.html",
-    "/guide-tax-essentials.html"
-  ];
-
-  const isGuidePage = /\/guide-[^\/]+\.html$/.test(path);
-  const isAlreadyCovered = ALREADY_COVERED.includes(path);
-
-  const response = await next();
-
-  if (!isGuidePage || isAlreadyCovered) {
-    return response;
-  }
-
-  const contentType = response.headers.get("content-type") || "";
-  if (!contentType.includes("text/html")) {
-    return response;
-  }
-
-  const widgetHtml = `
+const widgetHtml = `
 <div id="engagementWidget" style="margin-top:30px;padding:20px;border:1px solid #24304f;border-radius:8px;background:#101a3a;font-family:Arial,sans-serif;">
   <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
     <button id="loveBtn" onclick="sendLove()" style="background:#101a3a;border:2px solid #d4af37;border-radius:30px;padding:8px 18px;font-size:16px;color:#f4f1ea;cursor:pointer;">
@@ -62,13 +43,33 @@ loadFollowerCount();
 </script>
 `;
 
-  class BodyInjector {
-    element(element) {
-      element.append(widgetHtml, { html: true });
-    }
+class BodyInjector {
+  element(element) {
+    element.append(widgetHtml, { html: true });
   }
-
-  return new HTMLRewriter()
-    .on("body", new BodyInjector())
-    .transform(response);
 }
+
+export default {
+  async fetch(request, env, ctx) {
+    const url = new URL(request.url);
+    const path = url.pathname;
+
+    const isGuidePage = /\/guide-[^\/]+\.html$/.test(path);
+    const isAlreadyCovered = ALREADY_COVERED.includes(path);
+
+    const response = await env.ASSETS.fetch(request);
+
+    if (!isGuidePage || isAlreadyCovered) {
+      return response;
+    }
+
+    const contentType = response.headers.get("content-type") || "";
+    if (!contentType.includes("text/html")) {
+      return response;
+    }
+
+    return new HTMLRewriter()
+      .on("body", new BodyInjector())
+      .transform(response);
+  }
+};
