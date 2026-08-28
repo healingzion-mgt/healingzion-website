@@ -68,8 +68,17 @@ export default {
       return response;
     }
 
+    const newHeaders = new Headers(response.headers);
+    newHeaders.delete("content-length");
+
+    const rewritten = new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers: newHeaders
+    });
+
     return new HTMLRewriter()
       .on("body", new BodyInjector())
-      .transform(response);
+      .transform(rewritten);
   }
 };
