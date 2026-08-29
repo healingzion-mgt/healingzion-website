@@ -1053,9 +1053,20 @@ function escapeHtml(str) {
   div.textContent = str;
   return div.innerHTML;
 }
-
 loadPublishedVoices();
-loadPendingVoices();
+
+let voicesAdminAttempts = 0;
+const voicesAdminInterval = setInterval(() => {
+  voicesAdminAttempts++;
+  if (typeof isAdmin === 'function' && isAdmin()) {
+    loadPendingVoices();
+    clearInterval(voicesAdminInterval);
+  } else if (voicesAdminAttempts > 20) {
+    clearInterval(voicesAdminInterval);
+  }
+}, 500);
+                                                                                
+
 </script>
   
 </body>
