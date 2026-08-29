@@ -937,5 +937,126 @@ restoreSession();
     })
   }).catch(function() {});
     </script>
+  <!-- ===== COMMUNITY VOICES: public section ===== -->
+<div id="voicesSection" style="max-width:700px;margin:40px auto;padding:24px;border:1px solid #24304f;border-radius:12px;background:#101a3a;font-family:Arial,sans-serif;">
+  <h2 style="color:#d4af37;margin-top:0;">Community Voices</h2>
+  <p style="color:#9aa1b5;font-size:14px;">Share your experience with us — approved messages appear below.</p>
+
+  <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;">
+    <input type="text" id="voiceName" placeholder="Your name" style="padding:10px;border-radius:6px;border:1px solid #24304f;background:#0a1128;color:#f4f1ea;">
+    <textarea id="voiceMessage" placeholder="Share your experience..." rows="4" style="padding:10px;border-radius:6px;border:1px solid #24304f;background:#0a1128;color:#f4f1ea;"></textarea>
+    <button onclick="submitVoice()" style="background:#d4af37;color:#0a1128;border:none;border-radius:6px;padding:10px 18px;font-weight:bold;cursor:pointer;">Submit</button>
+    <div id="voiceSubmitMsg" style="font-size:13px;"></div>
+  </div>
+
+  <div id="publishedVoices"></div>
+</div>
+
+<!-- ===== COMMUNITY VOICES: admin-only review panel ===== -->
+<div id="voicesAdminSection" style="display:none;max-width:700px;margin:20px auto;padding:24px;border:1px solid #d4af37;border-radius:12px;background:#0a1128;font-family:Arial,sans-serif;">
+  <h2 style="color:#d4af37;margin-top:0;">Pending Voices (Admin)</h2>
+  <div id="pendingVoices"></div>
+</div>
+
+<script>
+async function loadPublishedVoices() {
+  try {
+    const r = await fetch('/api/voices');
+    const d = await r.json();
+    if (!d.ok) return;
+    const el = document.getElementById('publishedVoices');
+    if (d.voices.length === 0) {
+      el.innerHTML = '<p style="color:#9aa1b5;font-size:14px;">No voices shared yet — be the first.</p>';
+      return;
+    }
+    el.innerHTML = d.voices.map(v => `
+      <div style="border-top:1px solid #24304f;padding:14px 0;">
+        <p style="color:#f4f1ea;margin:0 0 6px;">"${escapeHtml(v.message)}"</p>
+        <p style="color:#d4af37;font-size:13px;margin:0;">— ${escapeHtml(v.name)}</p>
+      </div>
+    `).join('');
+  } catch (e) {}
+}
+
+async function submitVoice() {
+  const name = document.getElementById('voiceName').value.trim();
+  const message = document.getElementById('voiceMessage').value.trim();
+  const msgEl = document.getElementById('voiceSubmitMsg');
+  if (!name || !message) {
+    msgEl.style.color = '#e07856';
+    msgEl.textContent = 'Please fill in both fields.';
+    return;
+  }
+  try {
+    const r = await fetch('/api/voices', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, message })
+    });
+    const d = await r.json();
+    if (d.ok) {
+      msgEl.style.color = '#7bd68a';
+      msgEl.textContent = 'Thank you! Your message will appear once reviewed.';
+      document.getElementById('voiceName').value = '';
+      document.getElementById('voiceMessage').value = '';
+    } else {
+      msgEl.style.color = '#e07856';
+      msgEl.textContent = d.error || 'Something went wrong.';
+    }
+  } catch (e) {
+    msgEl.style.color = '#e07856';
+    msgEl.textContent = 'Network error — try again.';
+  }
+}
+
+async function loadPendingVoices() {
+  if (typeof isAdmin !== 'function' || !isAdmin()) return;
+  document.getElementById('voicesAdminSection').style.display = 'block';
+  try {
+    const r = await fetch('/api/voices?email=' + encodeURIComponent(currentUser.email));
+    const d = await r.json();
+    if (!d.ok) return;
+    const pending = d.voices.filter(v => v.status === 'pending');
+    const el = document.getElementById('pendingVoices');
+    if (pending.length === 0) {
+      el.innerHTML = '<p style="color:#9aa1b5;font-size:14px;">No pending voices right now.</p>';
+      return;
+    }
+    el.innerHTML = pending.map(v => `
+      <div style="border-top:1px solid #24304f;padding:14px 0;">
+        <p style="color:#f4f1ea;margin:0 0 6px;">"${escapeHtml(v.message)}"</p>
+        <p style="color:#9aa1b5;font-size:13px;margin:0 0 10px;">— ${escapeHtml(v.name)}</p>
+        <button onclick="reviewVoice(${v.id}, 'publish')" style="background:#7bd68a;color:#0a1128;border:none;border-radius:6px;padding:6px 14px;font-weight:bold;cursor:pointer;margin-right:8px;">Publish</button>
+        <button onclick="reviewVoice(${v.id}, 'reject')" style="background:#e07856;color:#0a1128;border:none;border-radius:6px;padding:6px 14px;font-weight:bold;cursor:pointer;">Reject</button>
+      </div>
+    `).join('');
+  } catch (e) {}
+}
+
+async function reviewVoice(id, action) {
+  try {
+    const r = await fetch('/api/voices-publish', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, action, email: currentUser.email })
+    });
+    const d = await r.json();
+    if (d.ok) {
+      loadPendingVoices();
+      loadPublishedVoices();
+    }
+  } catch (e) {}
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+loadPublishedVoices();
+loadPendingVoices();
+</script>
+  
 </body>
 </html>
