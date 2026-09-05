@@ -20,7 +20,58 @@
   .builds div:last-child { border-bottom:none; }
   .builds strong { color:#f4f1ea; }
   .back { display:inline-block; margin-bottom:10px; color:#d4af37; text-decoration:none; font-size:14px; }
+  .social-row { margin-top:18px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+  .social-btn { display:inline-block; font-weight:bold; padding:12px 22px; border-radius:30px;
+                text-decoration:none; font-size:14px; color:#fff; }
+  .whatsapp-btn { background:#25D366; }
+  .facebook-btn { background:#1877F2; }
+  .youtube-btn { background:#FF0000; }
 </style>
+
+<!-- Social preview tags (Facebook, WhatsApp, LinkedIn link previews) -->
+<meta property="og:type" content="profile">
+<meta property="og:title" content="Oyibo Oyoma | Founder & CEO, Healingzion Management Ventures">
+<meta property="og:description" content="Meet Oyibo Oyoma (Zion Oyoma), Founder and CEO of Healingzion Management Ventures — builder of HMV, Healingzion, and Healingzion Connect.">
+<meta property="og:url" content="https://healingzion-website.pages.dev/about.html">
+<meta property="og:image" content="https://healingzion-website.pages.dev/founder.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- Structured data for Google -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://healingzion-website.pages.dev/about.html#zion-oyoma",
+      "name": "Zion Oyoma",
+      "alternateName": "Oyibo Oyoma",
+      "jobTitle": "Founder & CEO",
+      "worksFor": { "@id": "https://healingzion-website.pages.dev/#organization" },
+      "url": "https://healingzion-website.pages.dev/about.html",
+      "image": "https://healingzion-website.pages.dev/founder.jpg",
+      "sameAs": [
+        "https://www.youtube.com/@healingzionconnect1",
+        "https://www.facebook.com/share/1JcbRm3jmR/"
+      ]
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://healingzion-website.pages.dev/#organization",
+      "name": "Healingzion Management Ventures",
+      "alternateName": "HMV",
+      "url": "https://healingzion-website.pages.dev/",
+      "logo": "https://healingzion-website.pages.dev/logo.jpg",
+      "founder": { "@id": "https://healingzion-website.pages.dev/about.html#zion-oyoma" },
+      "slogan": "Inspire. Empower. Succeed.",
+      "sameAs": [
+        "https://www.youtube.com/@healingzionconnect1",
+        "https://www.facebook.com/share/1JcbRm3jmR/"
+      ]
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <div class="wrap">
@@ -32,6 +83,12 @@
   <div class="eyebrow">FOUNDER &amp; CEO</div>
   <h1>Oyibo Oyoma</h1>
   <div class="role">Healingzion Management Ventures (HMV)</div>
+
+  <div class="social-row">
+    <a href="https://wa.me/2348148691969" target="_blank" rel="noopener" class="social-btn whatsapp-btn">💬 WhatsApp</a>
+    <a href="https://www.facebook.com/share/1JcbRm3jmR/" target="_blank" rel="noopener" class="social-btn facebook-btn">Facebook</a>
+    <a href="https://www.youtube.com/@healingzionconnect1" target="_blank" rel="noopener" class="social-btn youtube-btn">YouTube</a>
+  </div>
 </div>
 
 <div class="wrap">
