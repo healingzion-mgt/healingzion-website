@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hire Purchase & Leasing in Nigeria — HZ MGT Resource Hub</title>
+<meta name="description" content="A practical guide to the laws that govern hire purchase and equipment leasing in Nigeria, and what business owners need to know before signing.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Inter:wght@400;500;600;700&family=Jost:wght@500;600&display=swap');
+:root{
+--navy-950:#0a1a30;
+--navy-900:#0f2a4a;
+--navy-700:#1b3a5c;
+--navy-500:#345278;
+--gold-500:#c89b3c;
+--gold-400:#d9b563;
+--gold-200:#efdfb8;
+--cream:#faf8f4;
+--slate:#4a5568;
+--line:#e4dcc9;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+background:var(--cream);
+color:var(--navy-900);
+font-family:'Inter',sans-serif;
+line-height:1.7;
+}
+h1,h2,h3{font-family:'Playfair Display',serif;color:var(--navy-950);}
+nav{
+display:flex;align-items:center;justify-content:space-between;
+padding:20px 6vw;
+background:var(--cream);
+border-bottom:1px solid var(--line);
+position:sticky;top:0;z-index:20;
+}
+.brand{display:flex;align-items:center;gap:10px;font-family:'Playfair Display',serif;font-weight:700;font-size:1.15rem;color:var(--navy-900);text-decoration:none;}
+.brand .mgt{font-style:italic;color:var(--gold-500);}
+.back-link{font-size:.85rem;font-weight:600;color:var(--navy-700);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s ease;}
+.back-link:hover{border-color:var(--gold-500);color:var(--gold-500);}
+.print-btn{background:var(--gold-500);color:var(--navy-950);border:none;border-radius:20px;padding:8px 18px;font-size:.8rem;font-weight:700;cursor:pointer;margin-left:14px;transition:background .2s ease;}
+.print-btn:hover{background:var(--gold-400);}
+@media print{
+  nav, .cta-band, footer, .print-btn{display:none !important;}
+  body{background:#fff;}
+  article{max-width:100%;padding:0 4vw 20px;}
+  .callout,.checklist{break-inside:avoid;}
+  a[href]:after{content:"";}
+}
+
+.hero{padding:64px 6vw 40px;max-width:820px;margin:0 auto;}
+.eyebrow{display:flex;align-items:center;gap:10px;font-family:'Jost',sans-serif;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-500);font-weight:600;margin-bottom:18px;}
+.eyebrow .rule{width:34px;height:1px;background:var(--gold-500);}
+h1{font-size:clamp(1.9rem,4vw,2.7rem);line-height:1.2;margin-bottom:18px;}
+.hero p.lede{font-size:1.05rem;color:var(--slate);max-width:620px;}
+.meta-row{display:flex;gap:18px;margin-top:22px;font-size:.82rem;color:var(--navy-700);font-weight:500;}
+
+article{max-width:760px;margin:0 auto;padding:0 6vw 80px;}
+article h2{font-size:1.5rem;margin:44px 0 16px;padding-top:8px;border-top:1px solid var(--line);}
+article h2:first-of-type{border-top:none;padding-top:0;}
+article h3{font-size:1.15rem;margin:26px 0 10px;color:var(--navy-700);}
+article p{margin-bottom:16px;color:var(--navy-900);}
+article ul, article ol{margin:0 0 18px 22px;}
+article li{margin-bottom:8px;}
+.callout{
+background:#fff;border:1px solid var(--line);border-left:3px solid var(--gold-500);
+border-radius:6px;padding:18px 20px;margin:24px 0;
+}
+.callout .tag{font-family:'Jost',sans-serif;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-500);font-weight:600;display:block;margin-bottom:8px;}
+.checklist{background:var(--navy-950);color:var(--cream);border-radius:10px;padding:28px 26px;margin:32px 0;}
+.checklist h3{color:#fff;margin-top:0;}
+.checklist ul{margin-left:20px;}
+.checklist li{color:var(--gold-200);}
+.checklist li::marker{color:var(--gold-500);}
+
+.disclaimer{
+font-size:.82rem;color:var(--navy-700);background:#fff;border:1px solid var(--line);
+border-radius:8px;padding:16px 18px;margin-top:36px;
+}
+.cta-band{
+background:var(--navy-950);color:var(--cream);text-align:center;
+padding:60px 6vw;
+}
+.cta-band h2{color:#fff;font-size:1.7rem;margin-bottom:14px;}
+.cta-band p{color:var(--gold-200);max-width:480px;margin:0 auto 24px;}
+.btn-primary{
+display:inline-block;padding:13px 30px;border-radius:30px;
+background:var(--gold-500);color:var(--navy-950);font-weight:700;text-decoration:none;
+transition:transform .2s ease, background .2s ease;
+}
+.btn-primary:hover{background:var(--gold-400);transform:translateY(-2px);}
+footer{
+display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+padding:26px 6vw;font-size:.78rem;color:var(--navy-700);
+}
+@media (max-width:640px){
+  nav{padding:16px 5vw;}
+  .hero{padding:44px 5vw 24px;}
+  article{padding:0 5vw 60px;}
+  footer{flex-direction:column;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+<a href="/resources.html" class="brand">Healingzion<span class="mgt">MGT</span></a>
+<div>
+<a href="/resources.html#library" class="back-link">← Back to Resource Library</a>
+<button class="print-btn" onclick="window.print()">📄 Save as PDF</button>
+</div>
+</nav>
+
+<div class="hero">
+<div class="eyebrow"><span class="rule"></span>Guide · Regulatory & Compliance</div>
+<h1>Hire Purchase & Leasing in Nigeria: What Every Business Owner Should Know</h1>
+<p class="lede">Whether you're financing a delivery van, leasing office equipment, or structuring an asset-finance deal with a customer, these two arrangements are governed by different laws — and mixing them up can cost you. Here's the plain-language breakdown.</p>
+<div class="meta-row">
+<span>📖 8 min read</span>
+<span>🏛 Nigerian law</span>
+<span>🔄 Updated September 2026</span>
+</div>
+</div>
+
+<article>
+
+<h2>Hire Purchase vs. Leasing — they are not the same thing</h2>
+<p>The two get used interchangeably in everyday business conversation, but the law treats them very differently.</p>
+<p><strong>Hire purchase</strong> is an arrangement where the hirer pays in instalments and, once the final payment is made, ownership of the asset transfers to them. It's really a financed path to ownership, dressed up as a hire.</p>
+<p><strong>Leasing</strong>, by contrast, is simply paying to use an asset that the lessor continues to own throughout — and, depending on the type of lease, may continue to own even after the agreement ends. There's no automatic path to ownership built in, though some lease structures include a purchase option at the end.</p>
+<p>This distinction matters because Nigerian law regulates the two through separate frameworks.</p>
+
+<h2>The law governing hire purchase: the Hire Purchase Act</h2>
+<p>Hire purchase and credit-sale transactions in Nigeria are governed by the Hire Purchase Act, originally enacted in 1965 and currently consolidated as Cap H4, Laws of the Federation of Nigeria 2004. It was written with one clear goal: to stop hirers — often the weaker party in these deals — from being exploited by one-sided contract terms.</p>
+
+<h3>What it protects you from</h3>
+<ul>
+<li><strong>Implied quality guarantees.</strong> Every hire purchase agreement automatically includes a guarantee that the goods are fit for their purpose, match their description, and are of merchantable quality — even if the written contract doesn't say so.</li>
+<li><strong>Unfair repossession.</strong> Once a hirer has paid at least one-third of the total hire purchase price, the owner cannot simply seize the goods back. They must first obtain a court order. Attempting a repossession without one is unlawful.</li>
+<li><strong>The right to walk away.</strong> A hirer has a statutory right to terminate a hire purchase agreement early, subject to settling what's owed for the use of the goods up to that point.</li>
+<li><strong>Transparent pricing.</strong> The Act gives the responsible Minister power to regulate the terms of hire purchase transactions, including requiring a clear statement of the true interest rate — so the real cost of the credit can't be buried in vague language.</li>
+</ul>
+
+<div class="callout">
+<span class="tag">For business owners financing equipment</span>
+If you're the one buying a vehicle, machinery, or equipment through hire purchase, know that you cannot lose the asset overnight just because you missed a payment — the financier has to go through the courts once you've paid a meaningful share of the price. If you're the one <em>offering</em> hire purchase to your customers (say, equipment financing as part of your business model), your agreements must be built around these same protections, or they risk being unenforceable.
+</div>
+
+<h2>The law governing leasing: a different framework entirely</h2>
+<p>Leasing in Nigeria doesn't sit under one single "Leasing Act." Instead, it's regulated as a financial activity — which means the rules come primarily from banking and finance legislation rather than a hire-specific statute.</p>
+
+<h3>Who regulates it</h3>
+<ul>
+<li><strong>The Banks and Other Financial Institutions Act (BOFIA) 2020</strong> — most formal lessors (particularly equipment finance/leasing companies) fall under this Act's definition of "other financial institutions," which brings them under Central Bank of Nigeria oversight.</li>
+<li><strong>CBN Revised Guidelines for Finance Companies</strong> — these set out licensing requirements, capital thresholds, and operating standards for companies whose business includes leasing.</li>
+<li><strong>The Equipment Leasing Association of Nigeria (ELAN)</strong> — an industry body (not a government regulator) that represents lessors, tracks market data, and promotes standards across the sector. Nigeria's leasing industry has grown steadily, with outstanding lease volumes running into the trillions of naira.</li>
+</ul>
+
+<h3>What this means in practice</h3>
+<p>If you're leasing equipment as a business, you're typically dealing with a CBN-licensed finance company, not an informal arrangement. If you're the one offering leasing to others — say, leasing out vehicles or machinery as part of your business — and you're doing it at any real scale, this is the regulatory lane you fall into, and licensing obligations may apply depending on how your leasing activity is structured.</p>
+
+<div class="checklist">
+<h3>Quick checklist before you sign anything</h3>
+<ul>
+<li>Confirm which arrangement you're actually in — does ownership transfer at the end, or not? That single answer tells you which law applies.</li>
+<li>Ask for the true cost of credit in writing — not just the monthly instalment, but the total amount payable and how interest is calculated.</li>
+<li>Check who's licensed to offer the arrangement — a leasing company operating without the right CBN registration is a red flag.</li>
+<li>Know your one-third rule — if you're on a hire purchase agreement and you've paid a third or more of the price, repossession without a court order is not lawful.</li>
+<li>Keep every payment receipt — in a dispute, your payment history is what determines your rights under the Act.</li>
+</ul>
+</div>
+
+<h2>Where CAMA 2020 fits in</h2>
+<p>If your business is the one offering hire purchase or leasing as part of its operations — rather than just using it to acquire assets — how your company is structured under the Companies and Allied Matters Act (CAMA) 2020 also matters. Your registered business objects, governance structure, and compliance obligations as a company all feed into whether you're set up correctly to operate in this space.</p>
+
+<div class="disclaimer">
+This guide is for general information only and does not constitute legal advice. Hire purchase and leasing arrangements can carry significant financial and legal consequences — always have a qualified Nigerian legal practitioner review your specific agreement before signing.
+</div>
+
+</article>
+
+<div class="cta-band">
+<h2>Structuring an asset-finance or leasing arm of your business?</h2>
+<p>HZ MGT helps businesses get the structure, contracts, and compliance right before they scale — not after something goes wrong.</p>
+<a href="/resources.html#tiers" class="btn-primary">Talk to HZ MGT →</a>
+</div>
+
+<footer>
+<span>© 2026 Healingzion MGT — Building Businesses · Managing Excellence · Creating Sustainable Success</span>
+<span>Inspire · Empower · Succeed</span>
+</footer>
+
+</body>
+</html>
