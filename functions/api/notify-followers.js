@@ -29,7 +29,7 @@ export async function onRequestPost(context) {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          from: "Healingzion MGT <onboarding@resend.dev>",
+          from: "Healingzion MGT <notifications@healingzion.net>",
           to: row.email,
           subject: `New guide: ${title}`,
           html: `<p>Hi,</p><p>A new guide just went live on Healingzion Management:</p><p><strong>${title}</strong></p><p><a href="${url}">Read it here</a></p><p>— Healingzion Management</p>`
@@ -50,4 +50,4 @@ function jsonResponse(data, status = 200) {
     status,
     headers: { "Content-Type": "application/json" }
   });
-                         }
+}
