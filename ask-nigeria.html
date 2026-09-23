@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ask Nigeria | Healingzion MGT</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0a1128; --navy-light:#131c3a; --gold:#d4af37;
+    --slate:#8a93ab; --white:#ffffff;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--navy);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;}
+  h1,h2,h3{font-family:'Playfair Display',serif;}
+  a{color:var(--gold);text-decoration:none;}
+
+  nav{display:flex;justify-content:space-between;align-items:center;padding:18px 6vw;border-bottom:1px solid rgba(212,175,55,.2);flex-wrap:wrap;row-gap:10px;}
+  nav .brand{font-family:'Playfair Display',serif;font-weight:700;font-size:1.2rem;}
+  nav .brand span{color:var(--gold);font-style:italic;}
+  nav .links a{margin-left:22px;font-size:.9rem;color:var(--white);}
+  nav .links a:hover{color:var(--gold);}
+
+  .wrap{max-width:680px;margin:0 auto;padding:50px 6vw 80px;}
+  .eyebrow{color:var(--gold);letter-spacing:2px;font-size:.75rem;text-transform:uppercase;text-align:center;display:block;}
+  .wrap h1{font-size:2rem;margin:10px 0 6px;text-align:center;}
+  .wrap p.lede{color:var(--slate);margin:0 0 8px;text-align:center;}
+  .scope-note{color:var(--slate);font-size:.8rem;text-align:center;margin-bottom:34px;}
+  .scope-note b{color:var(--gold);}
+
+  .ask-box{display:flex;gap:10px;margin-bottom:8px;}
+  #questionInput{
+    flex-grow:1;padding:14px 18px;border-radius:12px;border:1.5px solid rgba(212,175,55,.4);
+    background:var(--navy-light);color:var(--white);font-size:.95rem;resize:none;font-family:'Inter',sans-serif;
+  }
+  #questionInput::placeholder{color:var(--slate);}
+  #askBtn{
+    background:var(--gold);color:var(--navy);border:none;padding:0 26px;border-radius:12px;
+    font-weight:700;cursor:pointer;font-size:.95rem;font-family:'Inter',sans-serif;flex-shrink:0;
+  }
+  #askBtn:disabled{opacity:.5;cursor:default;}
+  .char-count{text-align:right;font-size:.75rem;color:var(--slate);margin-bottom:24px;}
+
+  .examples{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:30px;}
+  .example-chip{
+    background:rgba(255,255,255,.04);border:1px solid rgba(212,175,55,.25);border-radius:20px;
+    padding:7px 14px;font-size:.78rem;color:var(--slate);cursor:pointer;
+  }
+  .example-chip:hover{border-color:var(--gold);color:var(--white);}
+
+  #answerCard{
+    display:none;background:var(--navy-light);border:1px solid rgba(212,175,55,.25);
+    border-radius:16px;padding:26px;margin-bottom:20px;
+  }
+  #answerCard.show{display:block;}
+  #answerCard .q-label{color:var(--gold);font-size:.78rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;font-weight:700;}
+  #answerCard .q-text{font-family:'Playfair Display',serif;font-size:1.15rem;margin-bottom:18px;}
+  #answerCard .a-label{color:var(--slate);font-size:.78rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+  #answerCard .a-text{line-height:1.65;font-size:.98rem;white-space:pre-wrap;}
+
+  .loading{color:var(--slate);text-align:center;padding:20px 0;display:none;}
+  .loading.show{display:block;}
+
+  .disclaimer{color:var(--slate);font-size:.78rem;text-align:center;margin-top:30px;line-height:1.5;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">Healingzion <span>MGT</span></div>
+  <div class="links">
+    <a href="/resources.html">Resource Library</a>
+    <a href="/resources.html#tiers">Membership</a>
+    <a href="/about.html">About</a>
+    <a href="/global-affairs.html">Global Affairs</a>
+    <a href="/flag-quiz.html">Flag Quiz</a>
+    <a href="/ask-nigeria.html">Ask Nigeria</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <span class="eyebrow">Free For Everyone</span>
+  <h1>Ask Nigeria</h1>
+  <p class="lede">Ask a question about Nigeria's economy, politics, finance, or government.</p>
+  <div class="scope-note">This assistant only answers questions in those <b>4 topics</b> — it will politely decline anything else.</div>
+
+  <div class="ask-box">
+    <textarea id="questionInput" rows="2" maxlength="500" placeholder="e.g. How does Nigeria's Monetary Policy Rate work?"></textarea>
+    <button id="askBtn" onclick="askQuestion()">Ask</button>
+  </div>
+  <div class="char-count"><span id="charCount">0</span>/500</div>
+
+  <div class="examples">
+    <div class="example-chip" onclick="fillExample(this)">What is the Monetary Policy Rate?</div>
+    <div class="example-chip" onclick="fillExample(this)">How is the President of Nigeria elected?</div>
+    <div class="example-chip" onclick="fillExample(this)">What causes inflation in Nigeria?</div>
+    <div class="example-chip" onclick="fillExample(this)">What does the CBN do?</div>
+  </div>
+
+  <div class="loading" id="loadingMsg">Thinking…</div>
+
+  <div id="answerCard">
+    <div class="q-label">You asked</div>
+    <div class="q-text" id="questionDisplay"></div>
+    <div class="a-label">Answer</div>
+    <div class="a-text" id="answerDisplay"></div>
+  </div>
+
+  <div class="disclaimer">
+    Ask Nigeria is an AI assistant and can make mistakes, especially with fast-changing figures (exact rates, current officeholders).
+    For official numbers, verify with the Central Bank of Nigeria, National Bureau of Statistics, or INEC.
+  </div>
+</div>
+
+<script>
+// TODO: replace with your deployed Worker's actual URL once created
+const API_BASE = "https://hmv-ask-nigeria.healingzion7.workers.dev";
+
+const input = document.getElementById('questionInput');
+const charCount = document.getElementById('charCount');
+input.addEventListener('input', () => { charCount.textContent = input.value.length; });
+
+function fillExample(el){
+  input.value = el.textContent;
+  charCount.textContent = input.value.length;
+  askQuestion();
+}
+
+async function askQuestion(){
+  const question = input.value.trim();
+  if(!question){ input.focus(); return; }
+
+  const btn = document.getElementById('askBtn');
+  const loading = document.getElementById('loadingMsg');
+  const card = document.getElementById('answerCard');
+
+  btn.disabled = true;
+  loading.classList.add('show');
+  card.classList.remove('show');
+
+  try{
+    const res = await fetch(API_BASE + '/api/ask', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question })
+    });
+    const data = await res.json();
+
+    if(!res.ok){
+      throw new Error(data.error || 'Something went wrong');
+    }
+
+    document.getElementById('questionDisplay').textContent = question;
+    document.getElementById('answerDisplay').textContent = data.answer;
+    card.classList.add('show');
+  }catch(e){
+    document.getElementById('questionDisplay').textContent = question;
+    document.getElementById('answerDisplay').textContent = '⚠️ ' + (e.message || 'Could not get an answer right now. Please try again.');
+    card.classList.add('show');
+  }
+
+  loading.classList.remove('show');
+  btn.disabled = false;
+}
+
+input.addEventListener('keydown', (e) => {
+  if(e.key === 'Enter' && !e.shiftKey){
+    e.preventDefault();
+    askQuestion();
+  }
+});
+</script>
+
+</body>
+</html>
