@@ -38,7 +38,8 @@ export async function onRequestGet(context) {
 <meta property="og:title" content="${esc(ogTitle)}">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:url" content="${esc(origin + "/g/" + id)}">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="${esc(origin + "/hmv-og-banner.jpg")}">
+<meta name="twitter:card" content="summary_large_image">
 <meta http-equiv="refresh" content="0;url=${esc(target)}">
 </head><body>
 <p><a href="${esc(target)}">Open the guide</a></p>
