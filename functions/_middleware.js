@@ -1,5 +1,5 @@
 export async function onRequest(context) {
-  const { request, next } = context;
+  const { request, next, env } = context;
   const url = new URL(request.url);
   const path = url.pathname;
 
@@ -26,6 +26,12 @@ export async function onRequest(context) {
   const isAlreadyCovered = ALREADY_COVERED.some(
     (covered) => covered.replace(/\.html$/, "") === cleanPath
   );
+
+  // ---- Paid guide protection (runs on the server, so it cannot be skipped) ----
+  if (isGuidePage) {
+    const blocked = await guardGuide(request, env, path);
+    if (blocked) return blocked;
+  }
 
   const response = await next();
 
@@ -80,4 +86,64 @@ loadFollowerCount();
     .on("body", new BodyInjector())
     .transform(newResponse);
 }
+
+
+
+const SB_URL = "https://unwusufofzfbwblbjyzf.supabase.co";
+const SB_KEY = "sb_publishable_xvICdxCTC3wzUYVZUOBjlw_2MvFIGwK";
+
+function pageHtml(title, body, status) {
+  return new Response(
+    `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${title}</title></head>` +
+    `<body style="margin:0;background:#0a1128;color:#f4f1ea;font-family:Arial,sans-serif;display:flex;min-height:100vh;align-items:center;justify-content:center;padding:24px;">` +
+    `<div style="max-width:440px;text-align:center"><h2 style="color:#d4af37">${title}</h2><p style="line-height:1.6">${body}</p>` +
+    `<p><a href="/resources.html" style="display:inline-block;background:#d4af37;color:#0a1128;padding:12px 22px;border-radius:30px;font-weight:bold;text-decoration:none">Go to the Resource Hub</a></p></div></body></html>`,
+    { status, headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" } }
+  );
+}
+
+function getCookie(request, name) {
+  const c = request.headers.get("Cookie") || "";
+  const m = c.match(new RegExp("(?:^|; )" + name + "=([^;]*)"));
+  return m ? decodeURIComponent(m[1]) : "";
+}
+
+// Returns a Response to block the visitor, or null to let them in.
+async function guardGuide(request, env, path) {
+  const file = path.split("/").pop().replace(/\.html$/, "");
+  if (!/^guide-[a-z0-9-]+$/i.test(file)) return null;
+  try {
+    const gr = await fetch(
+      SB_URL + "/rest/v1/guides?select=id,title,min_tier&content_url=ilike." + encodeURIComponent("*" + file + "*"),
+      { headers: { apikey: SB_KEY, Authorization: "Bearer " + SB_KEY } }
+    );
+    if (!gr.ok) return pageHtml("Please try again", "We could not check this guide right now. Please try again in a moment.", 503);
+    const rows = await gr.json();
+    if (!Array.isArray(rows) || rows.length === 0) return null; // not in the library: leave as is
+    const need = Math.max(...rows.map(r => r.min_tier || 0));
+    if (need === 0) return null; // free guide
+
+    const label = need === 1 ? "Growth" : "Enterprise";
+    const token = getCookie(request, "hz_t");
+    if (!token) {
+      return pageHtml("Members only", "This guide is for " + label + " members. Log in or create a free account on the Resource Hub, then choose a plan to unlock it.", 403);
+    }
+    const ur = await fetch(SB_URL + "/auth/v1/user", { headers: { apikey: SB_KEY, Authorization: "Bearer " + token } });
+    if (!ur.ok) {
+      return pageHtml("Please log in again", "Your login has expired. Open the Resource Hub, log in, then tap View guide again.", 403);
+    }
+    const user = await ur.json();
+    const pr = await fetch(
+      SB_URL + "/rest/v1/profiles?select=tier,tier_expires&id=eq." + encodeURIComponent(user.id),
+      { headers: { apikey: SB_KEY, Authorization: "Bearer " + token } }
+    );
+    const prof = pr.ok ? (await pr.json())[0] : null;
+    let tier = prof && prof.tier ? prof.tier : 0;
+    if (tier > 0 && prof.tier_expires && new Date(prof.tier_expires).getTime() < Date.now()) tier = 0;
+    if (tier >= need) return null;
+    return pageHtml("Members only", "This guide is for " + label + " members. Choose a plan on the Resource Hub to unlock it.", 403);
+  } catch (e) {
+    return pageHtml("Please try again", "We could not check this guide right now. Please try again in a moment.", 503);
+  }
+      }
 
