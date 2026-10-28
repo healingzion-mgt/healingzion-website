@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Watch &amp; Listen | HZ MGT Resource Hub</title>
+<meta name="description" content="Short videos and audio on business, branding and growth from Healingzion Management (HZ MGT). Watch and listen free, anytime.">
+<meta property="og:title" content="Watch &amp; Listen | HZ MGT">
+<meta property="og:description" content="Short videos and audio on business, branding and growth.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://healingzion.net/media.html">
+<meta property="og:image" content="https://healingzion.net/hmv-og-banner.jpg">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap');
+:root{--navy-950:#0a1a30;--navy-900:#0f2a4a;--navy-700:#1b3a5c;--gold-500:#c89b3c;--gold-400:#d9b563;--cream:#faf8f4;--slate:#4a5568;--line:#e4dcc9}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--cream);color:var(--navy-900);font-family:'Inter',sans-serif;line-height:1.6;overflow-x:hidden}
+h1,h2,h3{font-family:'Playfair Display',serif}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px 5vw;background:rgba(250,248,244,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.brand{font-family:'Playfair Display',serif;font-weight:700;font-size:1.1rem}
+.brand i{color:var(--gold-500)}
+.nav-r{display:flex;align-items:center;gap:10px;font-size:.82rem;font-weight:600}
+.nav-r a,.nav-r span.who{border:1px solid var(--navy-900);border-radius:30px;padding:7px 14px;white-space:nowrap}
+.nav-r span.who{border-color:var(--gold-500);color:var(--navy-700);max-width:46vw;overflow:hidden;text-overflow:ellipsis}
+header.hero{padding:120px 5vw 36px;text-align:center;max-width:900px;margin:0 auto}
+.eyebrow{letter-spacing:.18em;text-transform:uppercase;font-size:.72rem;font-weight:600;color:var(--gold-500)}
+h1{font-size:clamp(1.9rem,6vw,3rem);line-height:1.15;margin:10px 0 12px}
+.lede{color:var(--slate);max-width:620px;margin:0 auto}
+.filters{display:flex;gap:10px;justify-content:center;margin:26px 0 8px;flex-wrap:wrap}
+.pill{border:1px solid var(--line);background:#fff;border-radius:30px;padding:8px 20px;font-size:.85rem;font-weight:600;color:var(--navy-700)}
+.pill.on{background:var(--navy-900);color:#fff;border-color:var(--navy-900)}
+main{max-width:1100px;margin:0 auto;padding:10px 5vw 70px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;margin-top:18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.thumb{height:150px;background:linear-gradient(135deg,var(--navy-950),var(--navy-700));display:flex;align-items:center;justify-content:center;position:relative;color:var(--gold-400)}
+.thumb svg{width:54px;height:54px}
+.badge{position:absolute;top:10px;left:10px;font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:20px;background:var(--gold-500);color:var(--navy-950)}
+.badge.lock{background:#fff;color:var(--navy-900)}
+.dur{position:absolute;right:10px;bottom:10px;font-size:.75rem;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:2px 8px}
+.cbody{padding:16px 18px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
+.cbody h3{font-size:1.1rem;line-height:1.3}
+.cbody p{font-size:.88rem;color:var(--slate);flex:1}
+.row{display:flex;gap:8px;margin-top:6px}
+.btn{border:1px solid var(--navy-900);background:var(--navy-900);color:#fff;border-radius:30px;padding:9px 20px;font-size:.85rem;font-weight:600}
+.btn.alt{background:transparent;color:var(--navy-900)}
+.note{text-align:center;color:var(--slate);padding:40px 10px}
+.modal{position:fixed;inset:0;background:rgba(10,26,48,.86);z-index:100;display:none;align-items:center;justify-content:center;padding:16px}
+.modal.open{display:flex}
+.mbox{background:#fff;border-radius:14px;max-width:760px;width:100%;max-height:92vh;overflow:auto;position:relative}
+.mclose{position:absolute;top:8px;right:12px;font-size:1.8rem;line-height:1;background:none;border:0;color:#fff;z-index:2;text-shadow:0 0 6px #000}
+.mplayer{background:#000}
+.mplayer video{width:100%;max-height:60vh;display:block;background:#000}
+.mplayer.aud{background:linear-gradient(135deg,var(--navy-950),var(--navy-700));padding:34px 18px 26px;text-align:center}
+.mplayer.aud .note-ic{width:56px;height:56px;color:var(--gold-400);margin:0 auto 14px;display:block}
+.mplayer audio{width:100%;display:block;height:54px;color-scheme:light;background:#f1f3f4;border-radius:30px}
+.shr{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.shr a,.shr button{border:1px solid var(--navy-900);background:transparent;color:var(--navy-900);border-radius:30px;padding:8px 16px;font-size:.82rem;font-weight:600}
+.shr .wa{background:#25d366;border-color:#25d366;color:#fff}
+.perr{display:none;color:#fff;font-size:.85rem;margin-top:12px}
+.perr a{color:var(--gold-400);text-decoration:underline;font-weight:600}
+.minfo{padding:16px 20px 20px}
+.minfo h2{font-size:1.25rem;margin-bottom:6px}
+.minfo p{font-size:.9rem;color:var(--slate);margin-bottom:12px}
+.msg{padding:34px 22px;text-align:center}
+.msg h2{margin-bottom:8px}
+.msg p{color:var(--slate);margin-bottom:16px}
+footer{text-align:center;color:var(--slate);font-size:.82rem;padding:24px 5vw 40px}
+footer a{color:var(--navy-900);font-weight:600}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="brand">Healingzion<i> MGT</i></a>
+  <div class="nav-r"><span class="who" id="who" style="display:none"></span><a href="/resources.html" id="navLink">Resource Hub</a></div>
+</nav>
+
+<header class="hero">
+  <div class="eyebrow">Watch &amp; Listen</div>
+  <h1>Short videos and audio to grow your business</h1>
+  <p class="lede">Quick lessons you can watch or listen to in under five minutes. Free to start, new ones added regularly.</p>
+  <div class="filters" id="filters">
+    <button class="pill on" data-f="all">All</button>
+    <button class="pill" data-f="video">Videos</button>
+    <button class="pill" data-f="audio">Audio</button>
+  </div>
+</header>
+
+<main>
+  <div class="grid" id="grid"><div class="note" style="grid-column:1/-1">Loading&hellip;</div></div>
+</main>
+
+<footer>&copy; 2026 Healingzion Management (HZ MGT) &middot; <a href="/resources.html">More Guides</a></footer>
+
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="mbox">
+    <button class="mclose" onclick="closeModal()" aria-label="Close">&times;</button>
+    <div id="mcontent"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+const SB_URL = 'https://unwusufofzfbwblbjyzf.supabase.co';
+const SB_KEY = 'sb_publishable_xvICdxCTC3wzUYVZUOBjlw_2MvFIGwK';
+const BUCKETS = { 0: 'media-free', 1: 'media-growth', 2: 'media-enterprise' };
+const TIER_NAMES = { 0: 'Free', 1: 'Growth', 2: 'Enterprise' };
+let sb = null, user = null, tier = 0, items = [], filter = 'all';
+
+function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function fmtDur(s){ if(!s && s !== 0) return ''; s = Math.round(s); return Math.floor(s/60) + ':' + String(s%60).padStart(2,'0'); }
+
+const ICON_VIDEO = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+const ICON_AUDIO = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg>';
+
+async function init(){
+  try{
+    sb = supabase.createClient(SB_URL, SB_KEY);
+    const { data } = await sb.auth.getSession();
+    if(data && data.session){
+      user = data.session.user;
+      const { data: p } = await sb.from('profiles').select('tier,tier_expires').eq('id', user.id).single();
+      tier = p && p.tier ? p.tier : 0;
+      if(tier > 0 && p.tier_expires && new Date(p.tier_expires).getTime() < Date.now()) tier = 0;
+      const who = document.getElementById('who');
+      who.textContent = (TIER_NAMES[tier] || 'Free') + ' member';
+      who.style.display = '';
+    }
+  }catch(e){ console.error(e); }
+  await loadItems();
+  const v = new URLSearchParams(location.search).get('v');
+  if(v){ const it = items.find(i => i.id === v); if(it) play(it.id); }
+}
+
+async function loadItems(){
+  const grid = document.getElementById('grid');
+  try{
+    const { data, error } = await sb.from('media_items').select('*').order('created_at', { ascending: false });
+    if(error) throw error;
+    items = data || [];
+  }catch(e){
+    grid.innerHTML = '<div class="note" style="grid-column:1/-1">We could not load the library right now. Please try again in a moment.</div>';
+    return;
+  }
+  render();
+}
+
+function render(){
+  const grid = document.getElementById('grid');
+  const list = items.filter(i => filter === 'all' || i.kind === filter);
+  if(!list.length){
+    grid.innerHTML = '<div class="note" style="grid-column:1/-1">' + (items.length ? 'Nothing here yet.' : 'New videos and audio are coming soon. Check back shortly.') + '</div>';
+    return;
+  }
+  grid.innerHTML = list.map(i => {
+    const locked = i.min_tier > tier;
+    const badge = i.min_tier === 0 ? '<span class="badge">Free</span>' : '<span class="badge lock">' + (locked ? '&#128274; ' : '') + esc(TIER_NAMES[i.min_tier] || 'Members') + '</span>';
+    return '<div class="card">' +
+      '<div class="thumb">' + (i.kind === 'video' ? ICON_VIDEO : ICON_AUDIO) + badge + (i.duration_seconds ? '<span class="dur">' + fmtDur(i.duration_seconds) + '</span>' : '') + '</div>' +
+      '<div class="cbody"><h3>' + esc(i.title) + '</h3><p>' + esc(i.description) + '</p>' +
+      '<div class="row"><button class="btn" onclick="play(\'' + esc(i.id) + '\')">' + (i.kind === 'video' ? 'Watch' : 'Listen') + '</button>' +
+      '<button class="btn alt" onclick="share(\'' + esc(i.id) + '\')">Share</button></div></div></div>';
+  }).join('');
+}
+
+document.getElementById('filters').addEventListener('click', e => {
+  const b = e.target.closest('.pill'); if(!b) return;
+  filter = b.dataset.f;
+  document.querySelectorAll('.pill').forEach(p => p.classList.toggle('on', p === b));
+  render();
+});
+
+function openModal(html){ document.getElementById('mcontent').innerHTML = html; document.getElementById('modal').classList.add('open'); }
+function closeModal(){
+  const m = document.querySelector('#mcontent video, #mcontent audio'); if(m){ m.pause(); m.removeAttribute('src'); m.load(); }
+  document.getElementById('modal').classList.remove('open');
+  document.getElementById('mcontent').innerHTML = '';
+}
+function gate(title, text, btnText){
+  openModal('<div class="msg"><h2>' + esc(title) + '</h2><p>' + esc(text) + '</p><a class="btn" href="/resources.html#tiers">' + esc(btnText) + '</a></div>');
+}
+
+async function play(id){
+  const it = items.find(i => i.id === id); if(!it) return;
+  if(it.min_tier > 0){
+    if(!user){ gate('Members only', 'This ' + it.kind + ' is for ' + (TIER_NAMES[it.min_tier] || 'paid') + ' members. Log in or create a free account on the Resource Hub.', 'Log in on the Resource Hub'); return; }
+    if(tier < it.min_tier){ gate('Members only', 'This ' + it.kind + ' is for ' + (TIER_NAMES[it.min_tier] || 'paid') + ' members. Choose a plan on the Resource Hub to unlock it.', 'See membership plans'); return; }
+  }
+  let url = '';
+  try{
+    if(it.min_tier === 0){
+      url = sb.storage.from(it.bucket).getPublicUrl(it.path).data.publicUrl;
+    }else{
+      const { data, error } = await sb.storage.from(it.bucket).createSignedUrl(it.path, 3600);
+      if(error) throw error;
+      url = data.signedUrl;
+    }
+  }catch(e){
+    openModal('<div class="msg"><h2>Could not open this file</h2><p>Please log out, log in again and try once more.</p></div>');
+    return;
+  }
+  const err = '<div class="perr" id="perr">This file would not play here. <a href="' + esc(url) + '" target="_blank" rel="noopener">Tap to open it directly</a>.</div>';
+  const player = it.kind === 'video'
+    ? '<div class="mplayer"><video controls playsinline preload="auto" src="' + esc(url) + '"></video>' + err + '</div>'
+    : '<div class="mplayer aud">' + ICON_AUDIO.replace('<svg ', '<svg class="note-ic" ') + '<audio controls preload="auto" src="' + esc(url) + '"></audio>' + err + '</div>';
+  openModal(player + '<div class="minfo"><h2>' + esc(it.title) + '</h2><p>' + esc(it.description) + '</p>' +
+    shareRow(it) + '</div>');
+  const el = document.querySelector('#mcontent video, #mcontent audio');
+  if(el){
+    el.addEventListener('error', function(){ const pe = document.getElementById('perr'); if(pe) pe.style.display = 'block'; });
+    const pr = el.play(); if(pr && pr.catch) pr.catch(function(){});
+  }
+}
+
+function shareLink(it){ return location.origin + '/media.html?v=' + it.id; }
+function shareRow(it){
+  const link = shareLink(it), text = it.title + ' - Healingzion Management';
+  return '<div class="shr">' +
+    '<a class="wa" target="_blank" rel="noopener" href="https://wa.me/?text=' + encodeURIComponent(text + ' ' + link) + '">WhatsApp</a>' +
+    '<a target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(link) + '">Facebook</a>' +
+    '<a target="_blank" rel="noopener" href="https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(link) + '">LinkedIn</a>' +
+    '<button onclick="copyLink(\'' + esc(it.id) + '\', this)">Copy link</button></div>';
+}
+function copyLink(id, btn){
+  const it = items.find(i => i.id === id); if(!it) return;
+  const link = shareLink(it);
+  function ok(){ btn.textContent = 'Copied!'; setTimeout(function(){ btn.textContent = 'Copy link'; }, 2000); }
+  if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(link).then(ok, function(){ prompt('Copy this link:', link); }); }
+  else { prompt('Copy this link:', link); }
+}
+
+function share(id){
+  const it = items.find(i => i.id === id); if(!it) return;
+  const link = location.origin + '/media.html?v=' + it.id;
+  const text = it.title + ' - Healingzion Management';
+  if(navigator.share){ navigator.share({ title: it.title, text: text, url: link }).catch(function(){}); return; }
+  window.open('https://wa.me/?text=' + encodeURIComponent(text + ' ' + link), '_blank');
+}
+
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+init();
+</script>
+</body>
+</html>
